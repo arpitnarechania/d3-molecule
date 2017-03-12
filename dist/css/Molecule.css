@@ -1,0 +1,17 @@
+.tooltip {
+	background: #eee;
+	box-shadow: 0 0 5px #999999;
+	color: #333;
+	font-size: 12px;
+	padding: 2px;
+	position: absolute;
+	text-align: center;
+	z-index: 10;
+	display: block;
+	opacity: 0;
+}
+
+.fixedNode{
+    stroke:red !important;
+    stroke-width:2px;
+}
