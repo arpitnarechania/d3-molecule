@@ -8,7 +8,6 @@ function fillDropdownWithExamples(){
         option.text = key;
         option.value = j;
         uniqueMoleculeIds.add(option);
-
     });
 }
 
