@@ -180,14 +180,14 @@ function getMaxAtomRadius() {
 // Refresh a Molecule with modified parameters.
 function refreshMolecule() {
     var key = getUniqueMoleculeText();
-    $('#Molecule' + key).remove();
+    $('#Container' + key).remove();
     newMolecule();
 }
 
 // Deletes a Molecule
 function deleteMolecule() {
     var key = getUniqueMoleculeText();
-    $('#Molecule' + key).remove();
+    $('#Container' + key).remove();
 }
 
 // Adds a new Molecule
@@ -197,7 +197,7 @@ function newMolecule() {
     // Dont add to DOM if ID already exists. Up for
     // modifications in case multiple drafts of New Molecule need to be
     // simultaneously worked upon.
-    if ($('#Molecule' + key).length !== 0) {
+    if ($('#Container' + key).length !== 0) {
         return;
     }
 
@@ -205,7 +205,7 @@ function newMolecule() {
     var container = document.getElementById("container");
 
     var div = document.createElement("div");
-    div.id = "Molecule" + key;
+    div.id = "Container" + key;
     div.width= getCanvasWidth();
     // div.className += " col-md-4";
     container.insertBefore(div, container.firstChild);
@@ -214,7 +214,7 @@ function newMolecule() {
     var colorScheme = ["#2AA9CC", "#FCF78A", "#4FFFC5", "#FFA09B", "#CC3F87", "#32FF47", "#E8C72E", "#942EE8", "#3FD6FF"];
 
     var options = {
-        domElement: "#Molecule1",
+        domElement: "#Container",
         uniqueId: 1,
         width: getCanvasWidth(), 
         height: getCanvasHeight(),
@@ -246,7 +246,7 @@ function newMolecule() {
     }
 
     eval("var options" + key + "=JSON.parse(JSON.stringify(options))");
-    eval("options" + key)["domElement"] = "#Molecule" + key;
+    eval("options" + key)["domElement"] = "#Container" + key;
     eval("options" + key)["uniqueId"] = key;
     eval("molecule" + key + "=new Molecule(JSON.parse(JSON.stringify(Examples[key])),eval('options'+key))");
 
@@ -281,7 +281,7 @@ function removeExistingLink() {
     var moleculeUniqueText = getUniqueMoleculeText();
     var source_id = parseInt(document.getElementById("linkSourceId").value);
     var target_id = parseInt(document.getElementById("linkTargetId").value);
-    eval("molecule" + moleculeUniqueId).removeLink(source_id, target_id);
+    eval("molecule" + moleculeUniqueText).removeLink(source_id, target_id);
 }
 
 // Removes an Atom from a Molecule.

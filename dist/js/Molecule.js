@@ -57,12 +57,12 @@ function Molecule(graph, options) {
     var colorScale = d3.scale.ordinal().range(this.colorScheme); // The colorScale to use to color same atoms alike but different atoms in different colors.
     var radiusScale = d3.scale.sqrt().range([0, this.maxAtomRadius]); // The radiusScale
 
-    $(this.domElement).empty(); // Clear the DOM and redraw the molecule every time.
+    $(this.domElement).empty(); // Clear the DOM and redraw the svg molecule every time.
 
     this.svg = d3.select(this.domElement).append("svg")
         .attr("viewBox","0 0 " + this.width + " " + this.height)
         .attr("perserveAspectRatio","xMinYMid")
-        .attr("class", "molecule" + this.uniqueId)
+        .attr("class", "svg" + this.uniqueId)
         .attr("width", this.width)
         .attr("height", this.height)
         .style("background-color", this.background);
@@ -77,7 +77,7 @@ function Molecule(graph, options) {
             return;
         }
 
-        d3.select(".molecule"+options.uniqueId)
+        d3.select(".svg"+options.uniqueId)
         .attr("width", targetWidth)
         .attr("height", Math.round(targetWidth / aspect));
     }).trigger("resize");
@@ -528,7 +528,7 @@ Molecule.prototype.removeAllNodes = function() {
 
 Molecule.prototype.exportAsPNG = function(uniqueMoleculeText) {
 
-    var svgString = getSVGString(d3.select(".molecule" + uniqueMoleculeText).node());
+    var svgString = getSVGString(d3.select(".svg" + uniqueMoleculeText).node());
     svgString2Image(svgString, 2 * this.width, 2 * this.height, 'png', save); // passes Blob and filesize String to the callback
 
     function save(dataBlob, filesize) {

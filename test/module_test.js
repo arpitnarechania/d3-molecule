@@ -263,3 +263,15 @@ describe('validate elements', function() {
         periodicTableData.should.all.keys('Atomic Number','Symbol','Element','Atomic Radius','Atomic Weight','Period','Group','Phase','Most Stable Crystal','Type','Ionic Radius','Electronegativity','First Ionization Potential','Density','Melting Point (K)','Boiling Point (K)','Isotopes','Discoverer','Year of Discovery','Specific Heat Capacity','Electron Configuration','Display Row','Display Column');
     });
 });
+
+describe('testing functions using sinonjs spies', function() {
+    it('newMolecule() should load molecule in only 1 viewport', function () {
+        var spy = sinon.spy(newMolecule);
+        spy();
+        spy();
+        spy();
+        assert.equal($("#ContainerNewMolecule").length,1);
+        assert.equal($(".svgNewMolecule").length,1);
+        expect(spy.count).to.not.equal(0);
+    });
+});
