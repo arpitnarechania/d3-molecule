@@ -206,8 +206,8 @@ function newMolecule() {
 
     var div = document.createElement("div");
     div.id = "Molecule" + key;
-    // div.width= options.width;
-    div.className += " col-md-4";
+    div.width= getCanvasWidth();
+    // div.className += " col-md-4";
     container.insertBefore(div, container.firstChild);
     // container.append(div);
 
@@ -216,8 +216,10 @@ function newMolecule() {
     var options = {
         domElement: "#Molecule1",
         uniqueId: 1,
-        width: $('.col-md-4').width(), //getCanvasWidth()
-        height: $('.col-md-4').width(), //getCanvasHeight()
+        width: getCanvasWidth(), 
+        height: getCanvasHeight(),
+        // width: $('.col-md-4').width(),
+        // height: $('.col-md-4').width(),
         borderThickness: getCanvasBorderThickness(),
         borderColor: getCanvasBorderColor(),
         background: getCanvasBackgroundColor(),

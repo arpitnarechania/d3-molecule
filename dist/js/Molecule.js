@@ -60,10 +60,27 @@ function Molecule(graph, options) {
     $(this.domElement).empty(); // Clear the DOM and redraw the molecule every time.
 
     this.svg = d3.select(this.domElement).append("svg")
+        .attr("viewBox","0 0 " + this.width + " " + this.height)
+        .attr("perserveAspectRatio","xMinYMid")
         .attr("class", "molecule" + this.uniqueId)
         .attr("width", this.width)
         .attr("height", this.height)
         .style("background-color", this.background);
+
+    // This aspect of code takes care of the Responsive nature of the div.
+    var aspect = this.width / this.height;
+    $(window).on("resize", function() {
+        var targetWidth = $(options.domElement).width();
+
+        // Otherwise the default settings of width and height will be compromised.        
+        if(targetWidth > options.width){
+            return;
+        }
+
+        d3.select(".molecule"+options.uniqueId)
+        .attr("width", targetWidth)
+        .attr("height", Math.round(targetWidth / aspect));
+    }).trigger("resize");
 
     var borderPath = this.svg.append("rect")
         .attr("x", 0)

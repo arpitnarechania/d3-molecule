@@ -33,7 +33,8 @@ describe('default settings', function() {
 
         it('default canvas bounding box setting should be set and equal to true', function() {
             var val = isCanvasBoundingBox();
-            assert.equal(val, true);
+            // assert.equal(val, true);
+            expect(val).to.be.true;
         });
     });
 
@@ -104,20 +105,10 @@ describe('default settings', function() {
 
 });
 
-describe('load elements and examples', function() {
 
-    it('elements list from periodic table should be loaded and of length 118', function() {
-        var options_count = $('select#Atom option').length;
-        assert.equal(options_count, 118);
-    });
+describe('validate examples', function() {
 
-    it('default selected atom is to be Hydrogen', function() {
-        var atomElement = document.getElementById("Atom");
-        var atom = atomElement.options[atomElement.selectedIndex].value;
-        assert.equal(atom, "H");
-    });
-
-    it('examples list from Examples.js should be loaded and of length 14', function() {
+    it('examples list from Examples.js should be loaded and of length 14', function(){
         var options_count = $('select#MoleculeId option').length;
         assert.equal(options_count, 14);
     });
@@ -127,10 +118,6 @@ describe('load elements and examples', function() {
         var val = exampleElement.options[exampleElement.selectedIndex].innerHTML;
         assert.equal(val, "NewMolecule");
     });
-
-});
-
-describe('validate examples', function() {
 
     it('examples must be an Object', function() {
         // assert.isObject(Examples, 'Examples must be an Object');
@@ -176,6 +163,22 @@ describe('validate examples', function() {
     it('the links property must be an array of objects with "source","bond","target" properties', function() {
         Object.keys(Examples).forEach(function(key){
             Examples[key].links.should.all.keys('source','target','bond');
+        });
+    });
+
+    it('the links property must be an empty array for the NewMolecule Example', function() {
+        Object.keys(Examples).forEach(function(key){
+            if(key.localeCompare("NewMolecule") == 0){
+                expect(Examples[key].links).to.be.empty;
+            }
+        });
+    });
+
+    it('the nodes property must be an empty array for the NewMolecule Example', function() {
+        Object.keys(Examples).forEach(function(key){
+            if(key.localeCompare("NewMolecule") == 0){
+                expect(Examples[key].nodes).to.be.empty;
+            }
         });
     });
 
@@ -235,6 +238,17 @@ describe('validate examples', function() {
 
 describe('validate elements', function() {
 
+    it('elements list from periodic table should be loaded and of length 118', function() {
+        var options_count = $('select#Atom option').length;
+        assert.equal(options_count, 118); // Asserts the dropdown list length
+        expect(periodicTableData).to.have.length(118); // Asserts the dataset
+    });
+
+    it('default selected atom is to be Hydrogen', function() {
+        var atomElement = document.getElementById("Atom");
+        var atom = atomElement.options[atomElement.selectedIndex].value;
+        assert.equal(atom, "H");
+    });
         /* Alternative:
             Have separate test cases for all properties like below.
             
