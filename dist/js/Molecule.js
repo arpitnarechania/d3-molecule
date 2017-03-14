@@ -369,9 +369,7 @@ function Molecule(graph, options) {
 
         parent.force
             .on("tick", tick) // start the ticking
-            .on("end", callback);
-
-        parent.force
+            .on("end", callback)
             .nodes(parent.graph.nodes)
             .links(parent.graph.links)
             .start();
@@ -447,6 +445,15 @@ function Molecule(graph, options) {
             })
             .on('click', function(d) {
                 console.log(d.source.id + " - " + d.target.id + " selected");
+                removeLink(d.source.id,d.target.id);
+                addLink(d.source.id,d.target.id,d.bond==4 ? 1 : d.bond+1 );
+                render();
+            })
+            
+            .on('dblclick', function(d) {
+                console.log(d.source.id + " - " + d.target.id + " selected");
+                removeLink(d.source.id,d.target.id);
+                render();
             })
             .on('mouseout', function(d) {
                 link_tooltip.style('display', 'none');
@@ -455,12 +462,15 @@ function Molecule(graph, options) {
 
     }
 
-    // emptyContainerContents();
-    // drawContainerContents();
-    // configureForces();
-    // drawBonds();
-    // drawAtoms();
-    // configureTooltips();
+    // Use it for Rendering the molecule in the window / Refreshing it
+    var render = function(){
+        emptyContainerContents();
+        drawContainerContents();
+        configureForces();
+        drawBonds();
+        drawAtoms();
+        configureTooltips();    
+    }
 
     //    this.svg.on('click', function () {
     //        var coordinates = [0, 0];
@@ -556,6 +566,7 @@ function Molecule(graph, options) {
     }
 
     return {
+        render:render,
         drawBonds:drawBonds,
         drawAtoms:drawAtoms,
         findNodeIdIndex:findNodeIdIndex,

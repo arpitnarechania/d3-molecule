@@ -181,13 +181,7 @@ function getMaxAtomRadius() {
 function refreshMolecule() {
     var key = getUniqueMoleculeText();
 
-    eval("molecule"+key).emptyContainerContents();
-    eval("molecule"+key).addLink(source_id, target_id, bond);
-    eval("molecule"+key).drawContainerContents();
-    eval("molecule"+key).configureForces();
-    eval("molecule"+key).drawBonds();
-    eval("molecule"+key).drawAtoms();
-    eval("molecule"+key).configureTooltips();
+    eval("molecule"+key).render();
 }
 
 // Deletes a Molecule
@@ -212,10 +206,8 @@ function newMolecule() {
 
     var div = document.createElement("div");
     div.id = "Container" + key;
-    div.width= getCanvasWidth();
-    // div.className += " col-md-4";
-    container.insertBefore(div, container.firstChild);
-    // container.append(div);
+    div.width = getCanvasWidth();
+    container.insertBefore(div, container.firstChild); // OR container.append(div); if div to be added below.
 
     var colorScheme = ["#2AA9CC", "#FCF78A", "#4FFFC5", "#FFA09B", "#CC3F87", "#32FF47", "#E8C72E", "#942EE8", "#3FD6FF"];
 
@@ -224,8 +216,6 @@ function newMolecule() {
         uniqueId: 1,
         width: getCanvasWidth(), 
         height: getCanvasHeight(),
-        // width: $('.col-md-4').width(),
-        // height: $('.col-md-4').width(),
         borderThickness: getCanvasBorderThickness(),
         borderColor: getCanvasBorderColor(),
         background: getCanvasBackgroundColor(),
@@ -251,18 +241,11 @@ function newMolecule() {
         Examples[key].nodes[i]["size"] = Elements[Examples[key].nodes[i]["atom"]][getAtomSizeBasis()];
     }
 
-    eval("var options" + key + "=JSON.parse(JSON.stringify(options))");
-    eval("options" + key)["domElement"] = "#Container" + key;
-    eval("options" + key)["uniqueId"] = key;
-    eval("molecule" + key + "=new Molecule(JSON.parse(JSON.stringify(Examples[key])),eval('options'+key))");
-
-    eval("molecule"+key).emptyContainerContents();
-    eval("molecule"+key).drawContainerContents();
-    eval("molecule"+key).configureForces();
-    eval("molecule"+key).drawBonds();
-    eval("molecule"+key).drawAtoms();
-    eval("molecule"+key).configureTooltips();
-
+    eval("var options"+key+"=JSON.parse(JSON.stringify(options))");
+    eval("options"+key)["domElement"]="#Container"+key;
+    eval("options"+key)["uniqueId"]=key;
+    eval("molecule"+key+"=new Molecule(JSON.parse(JSON.stringify(Examples[key])),eval('options'+key))");
+    eval("molecule"+key).render();
 }
 
 // Adds a new Atom in the Molecule
@@ -274,13 +257,8 @@ function addNewNode() {
     var atomSizeBasis = getAtomSizeBasis();
     var size = Elements[atom][atomSizeBasis];
 
-    eval("molecule"+key).emptyContainerContents();
     eval("molecule"+key).addNode(atom, size);
-    eval("molecule"+key).drawContainerContents();
-    eval("molecule"+key).configureForces();
-    eval("molecule"+key).drawBonds();
-    eval("molecule"+key).drawAtoms();
-    eval("molecule"+key).configureTooltips();
+    eval("molecule"+key).render();
 }
 
 // Adds a Bond between 2 Atoms.
@@ -292,13 +270,8 @@ function addNewLink() {
     var bondElement = document.getElementById("Bond");
     var bond = bondElement.options[bondElement.selectedIndex].value;
 
-    eval("molecule"+key).emptyContainerContents();
     eval("molecule"+key).addLink(source_id, target_id, bond);
-    eval("molecule"+key).drawContainerContents();
-    eval("molecule"+key).configureForces();
-    eval("molecule"+key).drawBonds();
-    eval("molecule"+key).drawAtoms();
-    eval("molecule"+key).configureTooltips();
+    eval("molecule"+key).render();
 }
 
 // Removes a Bond between 2 Atoms.
@@ -307,13 +280,8 @@ function removeExistingLink() {
     var source_id = parseInt(document.getElementById("linkSourceId").value);
     var target_id = parseInt(document.getElementById("linkTargetId").value);
 
-    eval("molecule"+key).emptyContainerContents();
     eval("molecule"+key).removeLink(source_id, target_id);
-    eval("molecule"+key).drawContainerContents();
-    eval("molecule"+key).configureForces();
-    eval("molecule"+key).drawBonds();
-    eval("molecule"+key).drawAtoms();
-    eval("molecule"+key).configureTooltips();
+    eval("molecule"+key).render();
 }
 
 // Hides/Shows all Atoms in a Molecule
@@ -335,25 +303,15 @@ function showHideNodes() {
 // Removes all Bonds in a Molecule
 function removeLinks() {
     var key = getUniqueMoleculeText();
-    eval("molecule"+key).emptyContainerContents();
     eval("molecule"+key).removeAllLinks();
-    eval("molecule"+key).drawContainerContents();
-    eval("molecule"+key).configureForces();
-    eval("molecule"+key).drawBonds();
-    eval("molecule"+key).drawAtoms();
-    eval("molecule"+key).configureTooltips();
+    eval("molecule"+key).render();
 }
 
 // Removes all Atoms in a Molecule
 function removeNodes() {
     var key = getUniqueMoleculeText();
-    eval("molecule"+key).emptyContainerContents();
     eval("molecule"+key).removeAllNodes();
-    eval("molecule"+key).drawContainerContents();
-    eval("molecule"+key).configureForces();
-    eval("molecule"+key).drawBonds();
-    eval("molecule"+key).drawAtoms();
-    eval("molecule"+key).configureTooltips();
+    eval("molecule"+key).render();
     removeLinks();
 }
 
@@ -361,13 +319,8 @@ function removeNodes() {
 function removeExistingNode() {
     var key = getUniqueMoleculeText();
     var id = parseInt(document.getElementById("nodeId").value);
-    eval("molecule"+key).emptyContainerContents();
     eval("molecule"+key).removeNode(id);
-    eval("molecule"+key).drawContainerContents();
-    eval("molecule"+key).configureForces();
-    eval("molecule"+key).drawBonds();
-    eval("molecule"+key).drawAtoms();
-    eval("molecule"+key).configureTooltips();
+    eval("molecule"+key).render();
 }
 
 // Set-up the export button and call the Object method to do the actual export
