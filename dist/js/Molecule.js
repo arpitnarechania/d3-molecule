@@ -525,6 +525,13 @@ Molecule.prototype.removeAllNodes = function() {
     return new Molecule(this.graph, this.options);
 };
 
+Molecule.prototype.hideAllNodes = function() {
+    d3.selectAll(".atoms").style("opacity",0);
+};
+
+Molecule.prototype.showAllNodes = function() {
+    d3.selectAll(".atoms").style("opacity",1);
+};
 
 Molecule.prototype.exportAsPNG = function(uniqueMoleculeText) {
 

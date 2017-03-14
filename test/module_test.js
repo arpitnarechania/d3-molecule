@@ -275,3 +275,26 @@ describe('testing functions using sinonjs spies', function() {
         expect(spy.count).to.not.equal(0);
     });
 });
+
+describe('node crud operations', function() {
+    before('add ethanol molecule',function(){
+        $("#MoleculeId").val(5).attr("selected","selected");
+        newMolecule();
+    });
+
+    it('molecule loaded correctly', function () {
+        assert.notEqual($("#ContainerEthanol").children().length,0);
+    });
+
+    it('add a node', function () {
+
+    });
+
+    it('delete a node', function () {
+
+    });
+
+    it('hide all nodes', function () {
+
+    });
+});

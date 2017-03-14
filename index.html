@@ -55,6 +55,8 @@
                                 <input style="width:75px" id="nodeId" type="number" class="form-control  " placeholder="num">
                             </div>
                             <input type="button" class="btn btn-lg btn-default fa" id='removeNode' onclick="removeExistingNode()" value="&#xf1f8; Atom">
+                            <input type="button" class="btn btn-lg btn-default fa" id='removeAllNodes' onclick="removeAllNodes()" value="&#xf1f8; All Atoms">
+                            <input type="button" class="btn btn-lg btn-default fa fa-icon" id="showHideNodesID" onclick="showHideNodes()" title="hide" value="Hide Atoms">
                         </div>
                     </form>
                     <br>
@@ -69,6 +71,7 @@
                                 <input style="width:75px" id="linkTargetId" type="number" class="form-control " placeholder="num">
                             </div>
                             <input type="button" class="btn btn-lg btn-default fa" id='removeLink' onclick="removeExistingLink()" value="&#xf1f8; Bond">
+                            <input type="button" class="btn btn-lg btn-default fa" id='removeAllLinks' onclick="removeAllLinks()" value="&#xf1f8; All Bonds">
                         </div>
                     </form>
                     <br>

@@ -284,6 +284,35 @@ function removeExistingLink() {
     eval("molecule" + moleculeUniqueText).removeLink(source_id, target_id);
 }
 
+// Hides/Shows all Atoms in a Molecule
+function showHideNodes() {
+    var moleculeUniqueText = getUniqueMoleculeText();
+    var buttonTitle = document.getElementById('showHideNodesID').title;
+    if(buttonTitle == "show"){
+        document.getElementById('showHideNodesID').title = "hide";
+        $("#showHideNodesID").val("Hide Atoms");
+        eval("molecule" + moleculeUniqueText).showAllNodes();
+    }
+    else{
+        document.getElementById('showHideNodesID').title = "show";
+        $("#showHideNodesID").val("Show Atoms");
+        eval("molecule" + moleculeUniqueText).hideAllNodes();
+    }        
+}
+
+// Removes all Atoms in a Molecule
+function removeAllNodes() {
+    var moleculeUniqueText = getUniqueMoleculeText();
+    eval("molecule" + moleculeUniqueText).removeAllNodes();
+    removeAllLinks();
+}
+
+// Removes all Bonds in a Molecule
+function removeAllLinks() {
+    var moleculeUniqueText = getUniqueMoleculeText();
+    eval("molecule" + moleculeUniqueText).removeAllLinks();
+}
+
 // Removes an Atom from a Molecule.
 function removeExistingNode() {
     var moleculeUniqueText = getUniqueMoleculeText();
