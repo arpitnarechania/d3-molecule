@@ -180,8 +180,14 @@ function getMaxAtomRadius() {
 // Refresh a Molecule with modified parameters.
 function refreshMolecule() {
     var key = getUniqueMoleculeText();
-    $('#Container' + key).remove();
-    newMolecule();
+
+    eval("molecule"+key).emptyContainerContents();
+    eval("molecule"+key).addLink(source_id, target_id, bond);
+    eval("molecule"+key).drawContainerContents();
+    eval("molecule"+key).configureForces();
+    eval("molecule"+key).drawBonds();
+    eval("molecule"+key).drawAtoms();
+    eval("molecule"+key).configureTooltips();
 }
 
 // Deletes a Molecule
@@ -250,78 +256,122 @@ function newMolecule() {
     eval("options" + key)["uniqueId"] = key;
     eval("molecule" + key + "=new Molecule(JSON.parse(JSON.stringify(Examples[key])),eval('options'+key))");
 
+    eval("molecule"+key).emptyContainerContents();
+    eval("molecule"+key).drawContainerContents();
+    eval("molecule"+key).configureForces();
+    eval("molecule"+key).drawBonds();
+    eval("molecule"+key).drawAtoms();
+    eval("molecule"+key).configureTooltips();
+
 }
 
 // Adds a new Atom in the Molecule
 function addNewNode() {
-    var moleculeUniqueText = getUniqueMoleculeText();
+    var key = getUniqueMoleculeText();
     var atomElement = document.getElementById("Atom");
     var atom = atomElement.options[atomElement.selectedIndex].value;
 
     var atomSizeBasis = getAtomSizeBasis();
     var size = Elements[atom][atomSizeBasis];
 
-    eval("molecule" + moleculeUniqueText).addNode(atom, size);
+    eval("molecule"+key).emptyContainerContents();
+    eval("molecule"+key).addNode(atom, size);
+    eval("molecule"+key).drawContainerContents();
+    eval("molecule"+key).configureForces();
+    eval("molecule"+key).drawBonds();
+    eval("molecule"+key).drawAtoms();
+    eval("molecule"+key).configureTooltips();
 }
 
 // Adds a Bond between 2 Atoms.
 function addNewLink() {
-    var moleculeUniqueText = getUniqueMoleculeText();
+    var key = getUniqueMoleculeText();
 
     var source_id = parseInt(document.getElementById("sourceId").value);
     var target_id = parseInt(document.getElementById("targetId").value);
     var bondElement = document.getElementById("Bond");
     var bond = bondElement.options[bondElement.selectedIndex].value;
 
-    eval("molecule" + moleculeUniqueText).addLink(source_id, target_id, bond);
+    eval("molecule"+key).emptyContainerContents();
+    eval("molecule"+key).addLink(source_id, target_id, bond);
+    eval("molecule"+key).drawContainerContents();
+    eval("molecule"+key).configureForces();
+    eval("molecule"+key).drawBonds();
+    eval("molecule"+key).drawAtoms();
+    eval("molecule"+key).configureTooltips();
 }
 
 // Removes a Bond between 2 Atoms.
 function removeExistingLink() {
-    var moleculeUniqueText = getUniqueMoleculeText();
+    var key = getUniqueMoleculeText();
     var source_id = parseInt(document.getElementById("linkSourceId").value);
     var target_id = parseInt(document.getElementById("linkTargetId").value);
-    eval("molecule" + moleculeUniqueText).removeLink(source_id, target_id);
+
+    eval("molecule"+key).emptyContainerContents();
+    eval("molecule"+key).removeLink(source_id, target_id);
+    eval("molecule"+key).drawContainerContents();
+    eval("molecule"+key).configureForces();
+    eval("molecule"+key).drawBonds();
+    eval("molecule"+key).drawAtoms();
+    eval("molecule"+key).configureTooltips();
 }
 
 // Hides/Shows all Atoms in a Molecule
 function showHideNodes() {
-    var moleculeUniqueText = getUniqueMoleculeText();
+    var key = getUniqueMoleculeText();
     var buttonTitle = document.getElementById('showHideNodesID').title;
     if(buttonTitle == "show"){
         document.getElementById('showHideNodesID').title = "hide";
         $("#showHideNodesID").val("Hide Atoms");
-        eval("molecule" + moleculeUniqueText).showAllNodes();
+        eval("molecule" + key).showAllNodes();
     }
     else{
         document.getElementById('showHideNodesID').title = "show";
         $("#showHideNodesID").val("Show Atoms");
-        eval("molecule" + moleculeUniqueText).hideAllNodes();
+        eval("molecule" + key).hideAllNodes();
     }        
 }
 
-// Removes all Atoms in a Molecule
-function removeAllNodes() {
-    var moleculeUniqueText = getUniqueMoleculeText();
-    eval("molecule" + moleculeUniqueText).removeAllNodes();
-    removeAllLinks();
+// Removes all Bonds in a Molecule
+function removeLinks() {
+    var key = getUniqueMoleculeText();
+    eval("molecule"+key).emptyContainerContents();
+    eval("molecule"+key).removeAllLinks();
+    eval("molecule"+key).drawContainerContents();
+    eval("molecule"+key).configureForces();
+    eval("molecule"+key).drawBonds();
+    eval("molecule"+key).drawAtoms();
+    eval("molecule"+key).configureTooltips();
 }
 
-// Removes all Bonds in a Molecule
-function removeAllLinks() {
-    var moleculeUniqueText = getUniqueMoleculeText();
-    eval("molecule" + moleculeUniqueText).removeAllLinks();
+// Removes all Atoms in a Molecule
+function removeNodes() {
+    var key = getUniqueMoleculeText();
+    eval("molecule"+key).emptyContainerContents();
+    eval("molecule"+key).removeAllNodes();
+    eval("molecule"+key).drawContainerContents();
+    eval("molecule"+key).configureForces();
+    eval("molecule"+key).drawBonds();
+    eval("molecule"+key).drawAtoms();
+    eval("molecule"+key).configureTooltips();
+    removeLinks();
 }
 
 // Removes an Atom from a Molecule.
 function removeExistingNode() {
-    var moleculeUniqueText = getUniqueMoleculeText();
+    var key = getUniqueMoleculeText();
     var id = parseInt(document.getElementById("nodeId").value);
-    eval("molecule" + moleculeUniqueText).removeNode(id);
+    eval("molecule"+key).emptyContainerContents();
+    eval("molecule"+key).removeNode(id);
+    eval("molecule"+key).drawContainerContents();
+    eval("molecule"+key).configureForces();
+    eval("molecule"+key).drawBonds();
+    eval("molecule"+key).drawAtoms();
+    eval("molecule"+key).configureTooltips();
 }
 
 // Set-up the export button and call the Object method to do the actual export
 function exportSvgAsPNG() {
-    var moleculeUniqueText = getUniqueMoleculeText();
-    eval("molecule" + moleculeUniqueText).exportAsPNG(moleculeUniqueText);
+    var key = getUniqueMoleculeText();
+    eval("molecule"+key).exportAsPNG(key);
 }
