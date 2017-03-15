@@ -5,6 +5,7 @@
 
 <head>
     <title>d3-molecule</title>
+    <link rel="shortcut icon" type="image/png" href="assets/favicon.png" />
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
@@ -19,7 +20,9 @@
 <body>
     <div class="container">
         <div id="header">
-            <h2>d3-molecule</h2>
+            <div style="margin-top:16px;margin-bottom:16px;">
+                <a href="#" class="navbar-left"><img src="assets/logo-md.png" class="img img-responsive" width="50"></a><span style="font-size:32px;">d3-molecule</span>
+            </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
@@ -36,17 +39,23 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <select class="form-control " id="MoleculeId"></select>
-                            <input type="button" class="btn btn-lg btn-default fa" id='new' onclick="newMolecule()" value="&#xf055; New">
-                            <input type="button" class="btn btn-lg btn-default fa" id='refresh' onclick="refreshMolecule()" value="&#xf021; Refresh">
-                            <input type="button" class="btn btn-lg btn-default fa" id='delete' onclick="deleteMolecule()" value="&#xf1f8; Delete">
-                            <input type="button" class="btn btn-lg btn-default fa" id='save' onclick="exportSvgAsPNG()" value="&#xf019; Save">
+                            <input type="button" class="btn btn-lg btn-default fa" id='new' onclick="newMolecule()" title="add new molecule" value="&#xf055;">
+                            <input type="button" class="btn btn-lg btn-default fa" id='refresh' onclick="refreshMolecule()" title="refresh molecule" value="&#xf021;">
+                            <input type="button" class="btn btn-lg btn-default fa" id='delete' onclick="deleteMolecule()" title="delete molecule" value="&#xf1f8;">
+                            <input type="button" class="btn btn-lg btn-default fa" id='save' onclick="exportSvgAsPNG()" title="export molecule as png" value="&#xf019;">
                         </div>
                     </form>
-                    <br>
+                </div>
+            </div>
+        </div>
+        <div id="controls" class="collapse">
+            <div class="panel panel-default">
+                <div class="panel-heading">Atom</div>
+                <div class="panel-body">
                     <form class="form-inline">
                         <div class="form-group">
                             <select class="form-control " id="Atom"></select>
-                            <input type="button" class="btn btn-lg btn-default fa" id="addNode" onclick="addNewNode()" value="&#xf055; Atom">
+                            <input type="button" class="btn btn-lg btn-default fa" id="addNode" onclick="addNewNode()" title="add atom" value="&#xf055;">
                         </div>
                     </form>
                     <br>
@@ -56,124 +65,19 @@
                                 <span class="input-group-addon">Node Id</span>
                                 <input style="width:75px" id="nodeId" type="number" class="form-control  " placeholder="num">
                             </div>
-                            <input type="button" class="btn btn-lg btn-default fa" id='removeNode' onclick="removeExistingNode()" value="&#xf1f8; Atom">
-                            <input type="button" class="btn btn-lg btn-default fa" id='removeAllNodes' onclick="removeAllNodes()" value="&#xf1f8; All Atoms">
-                            <input type="button" class="btn btn-lg btn-default fa fa-icon" id="showHideNodesID" onclick="showHideNodes()" title="hide" value="Hide Atoms">
+                            <input type="button" class="btn btn-lg btn-default fa" id='removeNode' onclick="removeExistingNode()" value="&#xf1f8;" title="remove atom">
+                            <input type="button" class="btn btn-lg btn-default fa" id='removeAllNodes' onclick="removeNodes()" value="&#xf1f8; All" title="remove all atoms and links">
+                            <input type="button" class="btn btn-lg btn-default fa" id="hideNodeID" onclick="hideNode()" value="&#xf070;" title="hide atom">
+                            <input type="button" class="btn btn-lg btn-default fa" id="showNodeID" onclick="showNode()" value="&#xf06e;" title="show atom">
+                            <input type="button" class="btn btn-lg btn-default fa" id="hideNodesID" onclick="hideNodes()" value="&#xf070; All" title="hide all atoms">
+                            <input type="button" class="btn btn-lg btn-default fa" id="showNodesID" onclick="showNodes()" value="&#xf06e; All" title="show all atoms">
+                            <input type="button" class="btn btn-lg btn-default fa fa-icon" id="fixAtom" onclick="fixNode()" value="&#xf023;" title="fix atom">
+                            <input type="button" class="btn btn-lg btn-default fa fa-icon" id="unfixAtom" onclick="unfixNode()" value="&#xf09c;" title="unfix atom">
+                            <input type="button" class="btn btn-lg btn-default fa" id="fixAllAtoms" onclick="fixAllNodes()" value="&#xf023; All" title="fix all atoms">
+                            <input type="button" class="btn btn-lg btn-default fa" id="unfixAllAtoms" onclick="unfixAllNodes()" value="&#xf09c; All" title="unfix all atoms">
                         </div>
                     </form>
                     <br>
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon">Source Id</span>
-                                <input style="width:75px" id="linkSourceId" type="number" class="form-control " placeholder="num">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon">Target Id</span>
-                                <input style="width:75px" id="linkTargetId" type="number" class="form-control " placeholder="num">
-                            </div>
-                            <input type="button" class="btn btn-lg btn-default fa" id='removeLink' onclick="removeExistingLink()" value="&#xf1f8; Bond">
-                            <input type="button" class="btn btn-lg btn-default fa" id='removeAllLinks' onclick="removeAllLinks()" value="&#xf1f8; All Bonds">
-                        </div>
-                    </form>
-                    <br>
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon">Source Id</span>
-                                <input style="width:75px" id="sourceId" type="number" class="form-control " placeholder="num">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon">Target Id</span>
-                                <input style="width:75px" id="targetId" type="number" class="form-control " placeholder="num">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon">Bond Type</span>
-                                <select id="Bond" class="form-control ">
-                                    <option value=1 selected>Single Bond</option>
-                                    <option value=2>Double Bond</option>
-                                    <option value=3>Triple Bond</option>
-                                    <option value=4>Quadruple Bond</option>
-                                </select>
-                            </div>
-                            <input type="button" class="btn btn-lg btn-default fa" id='addLink' onclick="addNewLink()" value="&#xf055; Bond">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div id="controls" class="collapse">
-            <div class="panel panel-default">
-                <div class="panel-heading">Molecular Forces</div>
-                <div class="panel-body">
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Charge</span>
-                                <input style="width:75px" id="charge" type="number" value=-1000 class="form-control " placeholder="pixels">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Friction</span>
-                                <input style="width:75px" id="friction" type="number" value=0.9 class="form-control " placeholder="pixels">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Gravity</span>
-                                <input style="width:75px" id="gravity" type="number" value=0.1 class="form-control " placeholder="pixels">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Theta</span>
-                                <input style="width:75px" id="theta" type="number" value=0.8 class="form-control " placeholder="pixels">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Link Strength</span>
-                                <input style="width:75px" id="linkStrength" type="number" value=1 class="form-control " placeholder="pixels">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Alpha</span>
-                                <input style="width:75px" id="alpha" type="number" value=0.1 class="form-control " placeholder="pixels">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">Canvas</div>
-                <div class="panel-body">
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-lg fa-arrows-h"></i></span>
-                                <input style="width:75px" id="canvasWidth" type="number" value=500 class="form-control " placeholder="pixels">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-lg fa-arrows-v"></i></span>
-                                <input style="width:75px" id="canvasHeight" type="number" value=500 class="form-control " placeholder="pixels">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon">Background</span>
-                                <input style="width:75px" id="canvasBackgroundColor" type="color" value="#efefef" class="form-control " placeholder="text">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon">Border Thickness</span>
-                                <input style="width:75px" id="canvasBorderThickness" type="number" value=3 class="form-control " placeholder="pixels">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon">Border Color</span>
-                                <input style="width:75px" id="canvasBorderColor" type="color" value="#000000" class="form-control " placeholder="text">
-                            </div>
-                            <div class="form-control ">
-                                <div class="checkbox-inline">
-                                    <label>
-                                        <input id="canvasAsBoundingBox" type="checkbox" checked>Bounding Box</label>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">Atom</div>
-                <div class="panel-body">
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
@@ -209,12 +113,122 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
+                                <span class="input-group-addon">Source Id</span>
+                                <input style="width:75px" id="linkSourceId" type="number" class="form-control " placeholder="num">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">Target Id</span>
+                                <input style="width:75px" id="linkTargetId" type="number" class="form-control " placeholder="num">
+                            </div>
+                            <input type="button" class="btn btn-lg btn-default fa" id='removeLink' onclick="removeExistingLink()" value="&#xf127;" title="remove bond">
+                            <input type="button" class="btn btn-lg btn-default fa" id='removeAllLinks' onclick="removeLinks()" value="&#xf127; All" title="remove all bonds">
+                        </div>
+                    </form>
+                    <br>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">Source Id</span>
+                                <input style="width:75px" id="sourceId" type="number" class="form-control " placeholder="num">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">Target Id</span>
+                                <input style="width:75px" id="targetId" type="number" class="form-control " placeholder="num">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">Bond Type</span>
+                                <select id="Bond" class="form-control ">
+                                    <option value=1 selected>Single</option>
+                                    <option value=2>Double</option>
+                                    <option value=3>Triple</option>
+                                    <option value=4>Quadruple</option>
+                                    <option value=5>Dotted</option>
+                                    <option value=6>Dashed</option>
+                                    <option value=7>Wedged</option>
+                                    <option value=8>Wavy</option>
+                                </select>
+                            </div>
+                            <input type="button" class="btn btn-lg btn-default fa" id='addLink' onclick="addNewLink()" value="&#xf0c1;" title="add bond">
+                        </div>
+                    </form>
+                    <br>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <div class="input-group">
                                 <span class="input-group-addon">Thickness</span>
                                 <input style="width:75px" id="bondThickness" type="number" value=2 class="form-control  " placeholder="pixels">
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon">Color</span>
                                 <input style="width:75px" id="bondColor" type="color" value="#000000" class="form-control  " placeholder="text">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Canvas</div>
+                <div class="panel-body">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lg fa-arrows-h"></i></span>
+                                <input style="width:75px" id="canvasWidth" type="number" value=500 class="form-control " placeholder="pixels">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lg fa-arrows-v"></i></span>
+                                <input style="width:75px" id="canvasHeight" type="number" value=500 class="form-control " placeholder="pixels">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">Background</span>
+                                <input style="width:75px" id="canvasBackgroundColor" type="color" value="#EFEFEF" class="form-control " placeholder="text">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">Border Thickness</span>
+                                <input style="width:75px" id="canvasBorderThickness" type="number" value=3 class="form-control " placeholder="pixels">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">Border Color</span>
+                                <input style="width:75px" id="canvasBorderColor" type="color" value="#000000" class="form-control " placeholder="text">
+                            </div>
+                            <div class="form-control ">
+                                <div class="checkbox-inline">
+                                    <label>
+                                        <input id="canvasAsBoundingBox" type="checkbox" checked>Bounding Box</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Molecular Forces</div>
+                <div class="panel-body">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Charge</span>
+                                <input style="width:75px" id="charge" type="number" value=-1000 class="form-control " placeholder="pixels">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Friction</span>
+                                <input style="width:75px" id="friction" type="number" value=0.9 class="form-control " placeholder="pixels">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Gravity</span>
+                                <input style="width:75px" id="gravity" type="number" value=0.1 class="form-control " placeholder="pixels">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Theta</span>
+                                <input style="width:75px" id="theta" type="number" value=0.8 class="form-control " placeholder="pixels">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Link Strength</span>
+                                <input style="width:75px" id="linkStrength" type="number" value=1 class="form-control " placeholder="pixels">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Alpha</span>
+                                <input style="width:75px" id="alpha" type="number" value=0.1 class="form-control " placeholder="pixels">
                             </div>
                         </div>
                     </form>
@@ -227,11 +241,11 @@
     <script type="text/javascript" src="dist/js/Examples.js"></script>
     <script type="text/javascript" src="dist/js/Molecule.js"></script>
     <script type="text/javascript" src="dist/js/Main.js"></script>
+
     <script>
     fillDropdownWithExamples();
     loadPeriodicTableElements();
     </script>
-
     <!-- Adding Mocha, Chai CSS and JS files. Setting up bdd and the test files. -->
     <!-- Executing the Mocha Runner thereafter... -->
 

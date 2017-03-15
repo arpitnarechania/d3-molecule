@@ -3,7 +3,7 @@
 
 <head>
     <title>d3-molecule</title>
-    <link rel="shortcut icon" type="image/png" href="assets/favicon.png"/>
+    <link rel="shortcut icon" type="image/png" href="assets/favicon.png" />
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
@@ -21,7 +21,6 @@
             <div style="margin-top:16px;margin-bottom:16px;">
                 <a href="#" class="navbar-left"><img src="assets/logo-md.png" class="img img-responsive" width="50"></a><span style="font-size:32px;">d3-molecule</span>
             </div>
-
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
@@ -44,7 +43,13 @@
                             <input type="button" class="btn btn-lg btn-default fa" id='save' onclick="exportSvgAsPNG()" title="export molecule as png" value="&#xf019;">
                         </div>
                     </form>
-                    <br>
+                </div>
+            </div>
+        </div>
+        <div id="controls" class="collapse">
+            <div class="panel panel-default">
+                <div class="panel-heading">Atom</div>
+                <div class="panel-body">
                     <form class="form-inline">
                         <div class="form-group">
                             <select class="form-control " id="Atom"></select>
@@ -68,9 +73,41 @@
                             <input type="button" class="btn btn-lg btn-default fa fa-icon" id="unfixAtom" onclick="unfixNode()" value="&#xf09c;" title="unfix atom">
                             <input type="button" class="btn btn-lg btn-default fa" id="fixAllAtoms" onclick="fixAllNodes()" value="&#xf023; All" title="fix all atoms">
                             <input type="button" class="btn btn-lg btn-default fa" id="unfixAllAtoms" onclick="unfixAllNodes()" value="&#xf09c; All" title="unfix all atoms">
-                            </div>
+                        </div>
                     </form>
                     <br>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon">Size Basis</span>
+                                <select id="atomSizeBasis" class="form-control ">
+                                    <option value="Atomic Weight" selected>Atomic Weight</option>
+                                    <option value="Atomic Radius">Atomic Radius</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">Max Radius</span>
+                                <input style="width:75px" id="maxAtomRadius" type="number" value=6 class="form-control  " placeholder="pixels">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">Text Color</span>
+                                <input style="width:75px" id="atomTextColor" type="color" value="#000000" class="form-control  " placeholder="text">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">Border Thickness</span>
+                                <input style="width:75px" id="atomBorderThickness" type="number" value=1 class="form-control  " placeholder="pixels">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">Border Color</span>
+                                <input style="width:75px" id="atomBorderColor" type="color" value="#000000" class="form-control  " placeholder="text">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Bond</div>
+                <div class="panel-body">
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
@@ -99,47 +136,29 @@
                             <div class="input-group">
                                 <span class="input-group-addon">Bond Type</span>
                                 <select id="Bond" class="form-control ">
-                                    <option value=1 selected>Single Bond</option>
-                                    <option value=2>Double Bond</option>
-                                    <option value=3>Triple Bond</option>
-                                    <option value=4>Quadruple Bond</option>
+                                    <option value=1 selected>Single</option>
+                                    <option value=2>Double</option>
+                                    <option value=3>Triple</option>
+                                    <option value=4>Quadruple</option>
+                                    <option value=5>Dotted</option>
+                                    <option value=6>Dashed</option>
+                                    <option value=7>Wedged</option>
+                                    <option value=8>Wavy</option>
                                 </select>
                             </div>
                             <input type="button" class="btn btn-lg btn-default fa" id='addLink' onclick="addNewLink()" value="&#xf0c1;" title="add bond">
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-        <div id="controls" class="collapse">
-            <div class="panel panel-default">
-                <div class="panel-heading">Molecular Forces</div>
-                <div class="panel-body">
+                    <br>
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Charge</span>
-                                <input style="width:75px" id="charge" type="number" value=-1000 class="form-control " placeholder="pixels">
+                                <span class="input-group-addon">Thickness</span>
+                                <input style="width:75px" id="bondThickness" type="number" value=2 class="form-control  " placeholder="pixels">
                             </div>
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Friction</span>
-                                <input style="width:75px" id="friction" type="number" value=0.9 class="form-control " placeholder="pixels">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Gravity</span>
-                                <input style="width:75px" id="gravity" type="number" value=0.1 class="form-control " placeholder="pixels">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Theta</span>
-                                <input style="width:75px" id="theta" type="number" value=0.8 class="form-control " placeholder="pixels">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Link Strength</span>
-                                <input style="width:75px" id="linkStrength" type="number" value=1 class="form-control " placeholder="pixels">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Alpha</span>
-                                <input style="width:75px" id="alpha" type="number" value=0.1 class="form-control " placeholder="pixels">
+                                <span class="input-group-addon">Color</span>
+                                <input style="width:75px" id="bondColor" type="color" value="#000000" class="form-control  " placeholder="text">
                             </div>
                         </div>
                     </form>
@@ -181,49 +200,33 @@
                 </div>
             </div>
             <div class="panel panel-default">
-                <div class="panel-heading">Atom</div>
+                <div class="panel-heading">Molecular Forces</div>
                 <div class="panel-body">
                     <form class="form-inline">
                         <div class="form-group">
                             <div class="input-group">
-                                <span class="input-group-addon">Size Basis</span>
-                                <select id="atomSizeBasis" class="form-control ">
-                                    <option value="Atomic Weight" selected>Atomic Weight</option>
-                                    <option value="Atomic Radius">Atomic Radius</option>
-                                </select>
+                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Charge</span>
+                                <input style="width:75px" id="charge" type="number" value=-1000 class="form-control " placeholder="pixels">
                             </div>
                             <div class="input-group">
-                                <span class="input-group-addon">Max Radius</span>
-                                <input style="width:75px" id="maxAtomRadius" type="number" value=6 class="form-control  " placeholder="pixels">
+                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Friction</span>
+                                <input style="width:75px" id="friction" type="number" value=0.9 class="form-control " placeholder="pixels">
                             </div>
                             <div class="input-group">
-                                <span class="input-group-addon">Text Color</span>
-                                <input style="width:75px" id="atomTextColor" type="color" value="#000000" class="form-control  " placeholder="text">
+                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Gravity</span>
+                                <input style="width:75px" id="gravity" type="number" value=0.1 class="form-control " placeholder="pixels">
                             </div>
                             <div class="input-group">
-                                <span class="input-group-addon">Border Thickness</span>
-                                <input style="width:75px" id="atomBorderThickness" type="number" value=1 class="form-control  " placeholder="pixels">
+                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Theta</span>
+                                <input style="width:75px" id="theta" type="number" value=0.8 class="form-control " placeholder="pixels">
                             </div>
                             <div class="input-group">
-                                <span class="input-group-addon">Border Color</span>
-                                <input style="width:75px" id="atomBorderColor" type="color" value="#000000" class="form-control  " placeholder="text">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">Bond</div>
-                <div class="panel-body">
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon">Thickness</span>
-                                <input style="width:75px" id="bondThickness" type="number" value=2 class="form-control  " placeholder="pixels">
+                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Link Strength</span>
+                                <input style="width:75px" id="linkStrength" type="number" value=1 class="form-control " placeholder="pixels">
                             </div>
                             <div class="input-group">
-                                <span class="input-group-addon">Color</span>
-                                <input style="width:75px" id="bondColor" type="color" value="#000000" class="form-control  " placeholder="text">
+                                <span class="input-group-addon"><i class="fa fa-sm fa-magnet"></i> Alpha</span>
+                                <input style="width:75px" id="alpha" type="number" value=0.1 class="form-control " placeholder="pixels">
                             </div>
                         </div>
                     </form>

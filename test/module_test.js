@@ -203,11 +203,11 @@ describe('validate examples', function() {
         });
     });
 
-    it('the "bond" property must be either 1,2,3 or 4', function() {
+    it('the "bond" property must be either 1,2,3,4,5,6,7,8', function() {
         Object.keys(Examples).forEach(function(key){
 
             Examples[key].links.forEach(function(object){
-                expect(object.bond).to.be.oneOf([1,2,3,4]);
+                expect(object.bond).to.be.oneOf([1,2,3,4,5,6,7,8]);
             });
         });
     });

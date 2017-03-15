@@ -147,7 +147,7 @@ function Molecule(graph, options) {
         return slope;
     }
 
-    var compute_translation = function(d, dir, bond_type) {
+    var compute_translation = function(d, dir, bond_type, raw=false) {
         var x = 0;
         var y = 0;
         var slope = compute_angle(d.source.x, d.source.y, d.target.x, d.target.y) * 180 / Math.PI;
@@ -178,8 +178,23 @@ function Molecule(graph, options) {
             y = thetaYScale(Math.abs(slope)) * 6;
         }
 
+        if(raw){
+            return {x:x,y:y};
+        }
+
         return "translate(" + x + "," + y + ")";
     }
+
+   //This is the accessor function 
+    var lineFunction = d3.svg.line()
+                     .x(function(d) { return d.x; })
+                     .y(function(d) { return d.y; })
+                     .interpolate("linear");
+
+    var diagonalFunction = d3.svg.diagonal()
+      .source(function (d) { return { x: d[0].y, y: d[0].x }; })            
+      .target(function (d) { return { x: d[1].y, y: d[1].x }; })
+      .projection(function (d) { return [d.y, d.x]; });
 
     var tick = function() {
         parent.node.attr("transform", function(d) {
@@ -207,6 +222,52 @@ function Molecule(graph, options) {
             .attr("y2", function(d) {
                 return d.target.y;
             });
+
+        var wavy_bond = parent.link.filter(function(d) {
+            return d.bond == 8;
+        });
+
+        wavy_bond.selectAll('path')
+        .attr('d', function(d){
+            var curveData = [{ x: d.source.x, y: d.source.y }, { x: d.target.x, y: d.target.y }];
+            return diagonalFunction(curveData);
+        })
+
+
+        var dashed_bond = parent.link.filter(function(d){
+            return d.bond == 6;
+        });
+
+        dashed_bond.selectAll("path")
+                    .attr("d", function(d){ 
+                        // left_points = compute_translation(d,'left','double',true);
+                        // right_points = compute_translation(d,'right','double',true);
+                        // var lineData = [{ "x": d.target.x, "y": d.target.y},{ "x": left_points.x, "y": left_points.y},
+                        //                 { "x": left_points.x, "y": left_points.y},{ "x": d.source.x, "y": d.source.y},
+                        //                 { "x": d.source.x, "y": d.source.y},{ "x": right_points.x, "y": right_points.y},
+                        //                 { "x": right_points.x, "y": right_points.y},{ "x": d.target.x, "y": d.target.y}];
+
+                        var lineData = [{ "x": d.target.x, "y": d.target.y},{ "x": d.target.x-5, "y": d.target.y-5},
+                                        { "x": d.target.x-5, "y": d.target.y-5},{ "x": d.source.x, "y": d.source.y},
+                                        { "x": d.source.x, "y": d.source.y},{ "x": d.target.x+5, "y": d.target.y+5},
+                                        { "x": d.target.x+5, "y": d.target.y+5},{ "x": d.target.x, "y": d.target.y}];
+
+                        return lineFunction(lineData);
+                    });
+
+        var wedged_bond = parent.link.filter(function(d){
+            return d.bond == 7;
+        });
+
+        wedged_bond.selectAll("path")
+                    .attr("d", function(d){ 
+                        var lineData = [{ "x": d.target.x, "y": d.target.y},{ "x": d.target.x-2, "y": d.target.y-2},
+                                        { "x": d.target.x-2, "y": d.target.y-2},{ "x": d.source.x, "y": d.source.y},
+                                        { "x": d.source.x, "y": d.source.y},{ "x": d.target.x+2, "y": d.target.y+2},
+                                        { "x": d.target.x+2, "y": d.target.y+2},{ "x": d.target.x, "y": d.target.y}];
+
+                        return lineFunction(lineData);
+                    });
 
         var double_bonds = parent.link.filter(function(d) {
             return d.bond == 2;
@@ -269,6 +330,66 @@ function Molecule(graph, options) {
         var linkg = parent.link.enter()
             .append("g")
             .attr("class", "link")
+
+        var wavy_bond = parent.link.filter(function(d) {
+            return d.bond == 8;
+        });
+
+        wavy_bond.append('path')
+          .attr('stroke', parent.bondColor)
+          .attr('stroke-width', parent.bondThickness)
+          .attr('fill', 'none');
+
+        var dotted_bond = parent.link.filter(function(d) {
+            return d.bond == 5;
+        });
+
+        dotted_bond
+            .append("line")
+            .attr("class", "center")
+            .style("stroke", parent.bondColor)
+            .style("stroke-dasharray", (parent.bondThickness + "," + parent.bondThickness*1.5))
+            .style("stroke-width", parent.bondThickness + "px");
+
+        var dashed_bond = parent.link.filter(function(d){
+            return d.bond == 6;
+        });
+
+        dashed_bond.append("path")
+                    .style("fill",parent.bondColor)
+                    .style("stroke",parent.bondColor)
+                    .style("stroke-width",parent.bondThickness*2);
+
+        var wedged_bond = parent.link.filter(function(d){
+            return d.bond == 7;
+        });
+
+        var grad = parent.svg
+        .append("defs")
+        .append("svg:linearGradient")
+        .attr("id", "gradient")
+        .attr("x1", "5%")
+        .attr("y1", "7%")
+        .attr("x2", "10%")
+        .attr("y2", "10%")
+        .attr("spreadMethod", "repeat");
+
+        grad
+        .append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", parent.bondColor)
+        .attr("stop-opacity", 1);
+
+        grad
+        .append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", parent.background)
+        .attr("stop-opacity", 1);
+
+        wedged_bond.append("path")
+                    .style("fill","url(#gradient)")
+                    .style("stroke","url(#gradient)")
+                    .style("stroke-width",parent.bondThickness);
 
         var single_bond = parent.link.filter(function(d) {
             return d.bond == 1;
@@ -529,7 +650,7 @@ function Molecule(graph, options) {
                 var d = d3.select(selection).data()[0];
                 console.log(d.source.id + " - " + d.target.id + " selected");
                 removeLink(d.source.id, d.target.id);
-                addLink(d.source.id, d.target.id, d.bond == 4 ? 1 : d.bond + 1);
+                addLink(d.source.id, d.target.id, d.bond == 8 ? 1 : d.bond + 1);
                 render();
             })
             .on('dblclick', function(el) {
