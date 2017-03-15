@@ -181,7 +181,6 @@ function Molecule(graph, options) {
     }
 
     var tick = function() {
-
         parent.node.attr("transform", function(d) {
 
             // If false, then let the farther atoms go out of the viewport
@@ -350,7 +349,6 @@ function Molecule(graph, options) {
 
     function callback() {
         // Animation has completed. Do Something If you wish to.
-        // link.append("line").style("stroke-width", function(d) { return (d.bond * 2 - 1) * 2 + "px"; })
     }
 
     var configureForces = function() {
@@ -453,15 +451,41 @@ function Molecule(graph, options) {
                 var selection = el.srcElement;
                 console.log("click, data: ");
                 var d = d3.select(selection).data()[0];
-                d.fixed = true;
-                d3.select(selection).classed("fixedNode", true);
+                d.selected = true;
+                d3.select(selection).classed("selectedNode", true);
+
+                // 1) Check if 2 nodes are fixed, if yes then connect them with bonds.
+                var to_join = [];
+                parent.graph.nodes.forEach(function(d){
+                    if(d.selected){
+                        to_join.push(d.id);
+                    }
+                });
+
+                if(to_join.length == 2){
+                    if(noExistingLink(to_join[0],to_join[1])){
+                        // Join them using Single Bonds.
+                        addLink(to_join[0],to_join[1],1);
+                        render();                        
+                    }else{
+                        console.log("trying to act smart, eh!");
+                    }
+                }
+
+                if(to_join.length >= 2){
+                    to_join.forEach(function(id){
+                        parent.graph.nodes[findNodeIdIndex(id)].selected = false;
+                        parent.svg.selectAll(".atoms").classed("selectedNode", false);
+                    });
+                }
+
             })
             .on('dblclick', function(el) {
                 var selection = el.srcElement;
                 console.log("dblclick, data: ");
                 var d = d3.select(selection).data()[0];
-                d.fixed = false;
-                d3.select(selection).classed("fixedNode", false);
+                d.selected = false;
+                d3.select(selection).classed("selectedNode", false);
             });
 
         // Adding a tooltip on the links
@@ -536,6 +560,17 @@ function Molecule(graph, options) {
     //        console.log(x,y);
     //    });
 
+    var noExistingLink = function(source_id,target_id){
+        var i = 0;
+        while (i < parent.graph.links.length) {
+            if (parent.graph.links[i]['source']['id'] == source_id && parent.graph.links[i]['target']['id'] == target_id) {
+                return false;
+            }
+            i++;
+        }
+        return true;
+    };
+
     var findNodeIdIndex = function(id) {
         // Find the Index for a particular Node
         var i = 0;
@@ -545,7 +580,7 @@ function Molecule(graph, options) {
             }
             i++;
         }
-    }
+    };
 
     // Add and remove Elements on the graph object
     var addNode = function(atom, size) {
@@ -606,6 +641,51 @@ function Molecule(graph, options) {
         d3.selectAll(".atoms").style("opacity", 0);
     };
 
+    var fixNode = function(id){
+        parent.graph.nodes[findNodeIdIndex(id)].fixed = true;
+
+        var nodeToFix = parent.graph.nodes.filter(function(d) {
+            return d.id == id;
+        });
+
+        d3.selectAll(".atoms").data(nodeToFix).classed("fixedNode",true);
+   }
+
+    var unfixNode = function(id){
+        parent.graph.nodes[findNodeIdIndex(id)].fixed = false;
+        
+        var nodeToUnfix = parent.graph.nodes.filter(function(d) {
+            return d.id == id;
+        });
+
+        d3.selectAll(".atoms").data(nodeToUnfix).classed("fixedNode",false);
+    }
+
+    var fixAllNodes = function() {
+        parent.graph.nodes.forEach(function(d){
+            d.fixed = true;
+        });
+
+        var fixedNodes = parent.graph.nodes.filter(function(d) {
+            return d.fixed == true;
+        });
+
+        d3.selectAll(".atoms").data(fixedNodes).classed("fixedNode",true);
+
+    };
+
+    var unfixAllNodes = function() {
+        parent.graph.nodes.forEach(function(d){
+            d.fixed = false;
+        });
+
+        var unfixedNodes = parent.graph.nodes.filter(function(d) {
+            return d.fixed == false;
+        });
+
+        d3.selectAll(".atoms").data(unfixedNodes).classed("fixedNode",false);
+    };
+
     var showAllNodes = function() {
         d3.selectAll(".atoms").style("opacity", 1);
     };
@@ -623,6 +703,10 @@ function Molecule(graph, options) {
 
     return {
         render: render,
+        fixNode:fixNode,
+        unfixNode:unfixNode,
+        fixAllNodes:fixAllNodes,
+        unfixAllNodes:unfixAllNodes,
         drawBonds: drawBonds,
         drawAtoms: drawAtoms,
         findNodeIdIndex: findNodeIdIndex,

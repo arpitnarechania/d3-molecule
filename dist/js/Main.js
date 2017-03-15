@@ -284,20 +284,42 @@ function removeExistingLink() {
     eval("molecule"+key).render();
 }
 
-// Hides/Shows all Atoms in a Molecule
-function showHideNodes() {
+// Shows all Atoms in a Molecule
+function showNodes() {
     var key = getUniqueMoleculeText();
-    var buttonTitle = document.getElementById('showHideNodesID').title;
-    if(buttonTitle == "show"){
-        document.getElementById('showHideNodesID').title = "hide";
-        $("#showHideNodesID").val("Hide Atoms");
-        eval("molecule" + key).showAllNodes();
-    }
-    else{
-        document.getElementById('showHideNodesID').title = "show";
-        $("#showHideNodesID").val("Show Atoms");
-        eval("molecule" + key).hideAllNodes();
-    }        
+    eval("molecule" + key).showAllNodes();
+}
+
+// Hides all Atoms in a Molecule
+function hideNodes() {
+    var key = getUniqueMoleculeText();
+    eval("molecule" + key).hideAllNodes();
+}
+
+// Fixes all Atoms in a Molecule
+function fixAllNodes() {
+    var key = getUniqueMoleculeText();
+    eval("molecule" + key).fixAllNodes();
+}
+
+// Releases/Unfixes all Atoms in a Molecule
+function unfixAllNodes() {
+    var key = getUniqueMoleculeText();
+    eval("molecule" + key).unfixAllNodes();
+}
+
+// Fixes all Atoms in a Molecule
+function fixNode() {
+    var key = getUniqueMoleculeText();
+    var id = parseInt(document.getElementById("nodeId").value);
+    eval("molecule" + key).fixNode(id);
+}
+
+// Releases/Unfixes an Atom in a Molecule
+function unfixNode() {
+    var key = getUniqueMoleculeText();
+    var id = parseInt(document.getElementById("nodeId").value);
+    eval("molecule" + key).unfixNode(id);
 }
 
 // Removes all Bonds in a Molecule

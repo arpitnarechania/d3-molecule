@@ -35,17 +35,17 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <select class="form-control " id="MoleculeId"></select>
-                            <input type="button" class="btn btn-lg btn-default fa" id='new' onclick="newMolecule()" value="&#xf055; New">
-                            <input type="button" class="btn btn-lg btn-default fa" id='refresh' onclick="refreshMolecule()" value="&#xf021; Refresh">
-                            <input type="button" class="btn btn-lg btn-default fa" id='delete' onclick="deleteMolecule()" value="&#xf1f8; Delete">
-                            <input type="button" class="btn btn-lg btn-default fa" id='save' onclick="exportSvgAsPNG()" value="&#xf019; Save">
+                            <input type="button" class="btn btn-lg btn-default fa" id='new' onclick="newMolecule()" title="add new molecule" value="&#xf055;">
+                            <input type="button" class="btn btn-lg btn-default fa" id='refresh' onclick="refreshMolecule()" title="refresh molecule" value="&#xf021;">
+                            <input type="button" class="btn btn-lg btn-default fa" id='delete' onclick="deleteMolecule()" title="delete molecule" value="&#xf1f8;">
+                            <input type="button" class="btn btn-lg btn-default fa" id='save' onclick="exportSvgAsPNG()" title="export molecule as png" value="&#xf019;">
                         </div>
                     </form>
                     <br>
                     <form class="form-inline">
                         <div class="form-group">
                             <select class="form-control " id="Atom"></select>
-                            <input type="button" class="btn btn-lg btn-default fa" id="addNode" onclick="addNewNode()" value="&#xf055; Atom">
+                            <input type="button" class="btn btn-lg btn-default fa" id="addNode" onclick="addNewNode()" title="add atom" value="&#xf055;">
                         </div>
                     </form>
                     <br>
@@ -55,10 +55,15 @@
                                 <span class="input-group-addon">Node Id</span>
                                 <input style="width:75px" id="nodeId" type="number" class="form-control  " placeholder="num">
                             </div>
-                            <input type="button" class="btn btn-lg btn-default fa" id='removeNode' onclick="removeExistingNode()" value="&#xf1f8; Atom">
-                            <input type="button" class="btn btn-lg btn-default fa" id='removeAllNodes' onclick="removeNodes()" value="&#xf1f8; All Atoms">
-                            <input type="button" class="btn btn-lg btn-default fa fa-icon" id="showHideNodesID" onclick="showHideNodes()" title="hide" value="Hide Atoms">
-                        </div>
+                            <input type="button" class="btn btn-lg btn-default fa" id='removeNode' onclick="removeExistingNode()" value="&#xf1f8;" title="remove atom">
+                            <input type="button" class="btn btn-lg btn-default fa" id='removeAllNodes' onclick="removeNodes()" value="&#xf1f8; All" title="remove all atoms and links">
+                            <input type="button" class="btn btn-lg btn-default fa" id="hideNodesID" onclick="hideNodes()" value="&#xf070; All" title="hide all atoms">
+                            <input type="button" class="btn btn-lg btn-default fa" id="showNodesID" onclick="showNodes()" value="&#xf06e; All" title="show all atoms">
+                            <input type="button" class="btn btn-lg btn-default fa fa-icon" id="fixAtom" onclick="fixNode()" value="&#xf023;" title="fix atom">
+                            <input type="button" class="btn btn-lg btn-default fa fa-icon" id="unfixAtom" onclick="unfixNode()" value="&#xf09c;" title="unfix atom">
+                            <input type="button" class="btn btn-lg btn-default fa" id="fixAllAtoms" onclick="fixAllNodes()" value="&#xf023; All" title="fix all atoms">
+                            <input type="button" class="btn btn-lg btn-default fa" id="unfixAllAtoms" onclick="unfixAllNodes()" value="&#xf09c; All" title="unfix all atoms">
+                            </div>
                     </form>
                     <br>
                     <form class="form-inline">
@@ -71,8 +76,8 @@
                                 <span class="input-group-addon">Target Id</span>
                                 <input style="width:75px" id="linkTargetId" type="number" class="form-control " placeholder="num">
                             </div>
-                            <input type="button" class="btn btn-lg btn-default fa" id='removeLink' onclick="removeExistingLink()" value="&#xf1f8; Bond">
-                            <input type="button" class="btn btn-lg btn-default fa" id='removeAllLinks' onclick="removeLinks()" value="&#xf1f8; All Bonds">
+                            <input type="button" class="btn btn-lg btn-default fa" id='removeLink' onclick="removeExistingLink()" value="&#xf127;" title="remove bond">
+                            <input type="button" class="btn btn-lg btn-default fa" id='removeAllLinks' onclick="removeLinks()" value="&#xf127; All" title="remove all bonds">
                         </div>
                     </form>
                     <br>
@@ -95,7 +100,7 @@
                                     <option value=4>Quadruple Bond</option>
                                 </select>
                             </div>
-                            <input type="button" class="btn btn-lg btn-default fa" id='addLink' onclick="addNewLink()" value="&#xf055; Bond">
+                            <input type="button" class="btn btn-lg btn-default fa" id='addLink' onclick="addNewLink()" value="&#xf0c1;" title="add bond">
                         </div>
                     </form>
                 </div>

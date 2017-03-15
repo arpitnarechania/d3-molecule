@@ -11,7 +11,12 @@
 	opacity: 0;
 }
 
+.selectedNode{
+    stroke:blue !important;
+    stroke-width:2.5px;
+}
+
 .fixedNode{
     stroke:red !important;
-    stroke-width:2px;
+    stroke-width:2.5px;
 }
