@@ -60,15 +60,15 @@ function Molecule(graph, options) {
     var colorScale = d3.scale.ordinal().range(this.colorScheme); // The colorScale to use to color same atoms alike but different atoms in different colors.
     var radiusScale = d3.scale.sqrt().range([0, this.maxAtomRadius]); // The radiusScale
 
-    var emptyContainerContents = function(){
+    var emptyContainerContents = function() {
         $(parent.domElement).empty(); // Clear the DOM and redraw the svg molecule every time.
     }
 
-    var drawContainerContents = function(){
-        
+    var drawContainerContents = function() {
+
         parent.svg = d3.select(parent.domElement).append("svg")
-            .attr("viewBox","0 0 " + parent.width + " " + parent.height)
-            .attr("perserveAspectRatio","xMinYMid")
+            .attr("viewBox", "0 0 " + parent.width + " " + parent.height)
+            .attr("perserveAspectRatio", "xMinYMid")
             .attr("class", "svg" + parent.uniqueId)
             .attr("width", parent.width)
             .attr("height", parent.height)
@@ -80,13 +80,13 @@ function Molecule(graph, options) {
             var targetWidth = $(parent.domElement).width();
 
             // Otherwise the default settings of width and height will be compromised.        
-            if(targetWidth > parent.width){
+            if (targetWidth > parent.width) {
                 return;
             }
 
-            d3.select(".svg"+parent.uniqueId)
-            .attr("width", targetWidth)
-            .attr("height", Math.round(targetWidth / aspect));
+            d3.select(".svg" + parent.uniqueId)
+                .attr("width", targetWidth)
+                .attr("height", Math.round(targetWidth / aspect));
         }).trigger("resize");
 
         var borderPath = parent.svg.append("rect")
@@ -100,7 +100,7 @@ function Molecule(graph, options) {
 
     }
 
-    var drawAtoms = function(){
+    var drawAtoms = function() {
 
         parent.node = parent.svg.selectAll(".node")
             .data(parent.graph.nodes)
@@ -129,7 +129,7 @@ function Molecule(graph, options) {
             .style("pointer-events", "none")
             .text(function(d) {
                 return d.atom;
-            });        
+            });
     }
 
     var thetaXScale = d3.scale.linear()
@@ -261,8 +261,8 @@ function Molecule(graph, options) {
             })
     }
 
-    var drawBonds = function(){
-    
+    var drawBonds = function() {
+
         parent.link = parent.svg.selectAll(".link")
             .data(parent.graph.links)
 
@@ -276,7 +276,7 @@ function Molecule(graph, options) {
 
         single_bond
             .append("line")
-            .attr("class", "link center")
+            .attr("class", "center")
             .style("stroke", parent.bondColor)
             .style("stroke-width", parent.bondThickness + "px");
 
@@ -286,13 +286,13 @@ function Molecule(graph, options) {
 
         double_bonds
             .append("line")
-            .attr("class", "link right")
+            .attr("class", "right")
             .style("stroke", parent.bondColor)
             .style("stroke-width", parent.bondThickness + "px");
 
         double_bonds
             .append("line")
-            .attr("class", "link left")
+            .attr("class", "left")
             .style("stroke", parent.bondColor)
             .style("stroke-width", parent.bondThickness + "px");
 
@@ -302,19 +302,19 @@ function Molecule(graph, options) {
 
         triple_bonds
             .append("line")
-            .attr("class", "link right")
+            .attr("class", "right")
             .style("stroke", parent.bondColor)
             .style("stroke-width", parent.bondThickness + "px");
 
         triple_bonds
             .append("line")
-            .attr("class", "link left")
+            .attr("class", "left")
             .style("stroke", parent.bondColor)
             .style("stroke-width", parent.bondThickness + "px");
 
         triple_bonds
             .append("line")
-            .attr("class", "link center")
+            .attr("class", "center")
             .style("stroke", parent.bondColor)
             .style("stroke-width", parent.bondThickness + "px");
 
@@ -324,25 +324,25 @@ function Molecule(graph, options) {
 
         quad_bonds
             .append("line")
-            .attr("class", "link right")
+            .attr("class", "right")
             .style("stroke", parent.bondColor)
             .style("stroke-width", parent.bondThickness + "px");
 
         quad_bonds
             .append("line")
-            .attr("class", "link left")
+            .attr("class", "left")
             .style("stroke", parent.bondColor)
             .style("stroke-width", parent.bondThickness + "px");
 
         quad_bonds
             .append("line")
-            .attr("class", "link right2")
+            .attr("class", "right2")
             .style("stroke", parent.bondColor)
             .style("stroke-width", parent.bondThickness + "px");
 
         quad_bonds
             .append("line")
-            .attr("class", "link left2")
+            .attr("class", "left2")
             .style("stroke", parent.bondColor)
             .style("stroke-width", parent.bondThickness + "px");
 
@@ -353,7 +353,7 @@ function Molecule(graph, options) {
         // link.append("line").style("stroke-width", function(d) { return (d.bond * 2 - 1) * 2 + "px"; })
     }
 
-    var configureForces = function(){
+    var configureForces = function() {
 
         parent.force = d3.layout.force()
             .size([parent.width, parent.height])
@@ -375,8 +375,46 @@ function Molecule(graph, options) {
             .start();
     }
 
-    var configureTooltips = function(){
-            // Adding a tooltip on the nodes
+    function singleDoubleClickHandler() {
+        var event = d3.dispatch('click', 'dblclick');
+
+        function cc(selection) {
+            var down,
+                tolerance = 5,
+                last,
+                wait = null;
+            // euclidean distance
+            function dist(a, b) {
+                return Math.sqrt(Math.pow(a[0] - b[0], 2), Math.pow(a[1] - b[1], 2));
+            }
+            selection.on('mousedown', function() {
+                down = d3.mouse(document.body);
+                last = +new Date();
+            });
+            selection.on('mouseup', function() {
+                if (dist(down, d3.mouse(document.body)) > tolerance) {
+                    return;
+                } else {
+                    if (wait) {
+                        window.clearTimeout(wait);
+                        wait = null;
+                        event.dblclick(d3.event);
+                    } else {
+                        wait = window.setTimeout((function(e) {
+                            return function() {
+                                event.click(e);
+                                wait = null;
+                            };
+                        })(d3.event), 300);
+                    }
+                }
+            });
+        };
+        return d3.rebind(cc, event, 'on');
+    }
+
+    var configureTooltips = function() {
+        // Adding a tooltip on the nodes
         var node_tooltip = d3.select(parent.domElement)
             .append('div')
             .attr('class', 'tooltip');
@@ -403,17 +441,27 @@ function Molecule(graph, options) {
                 node_tooltip.style('top', (d3.event.layerY + 10) + 'px')
                     .style('left', (d3.event.layerX - 25) + 'px');
             })
-            .on('click', function(d) {
-                d.fixed = true;
-                d3.select(this).classed("fixedNode", true);
-            })
-            .on('dblclick', function(d) {
-                d.fixed = false;
-                d3.select(this).classed("fixedNode", false);
-            })
             .on('mouseout', function(d) {
                 node_tooltip.style('display', 'none');
                 node_tooltip.style('opacity', 0);
+            });
+
+        var nodeHandler = singleDoubleClickHandler();
+        parent.svg.selectAll('.atoms').call(nodeHandler);
+        nodeHandler
+            .on('click', function(el) {
+                var selection = el.srcElement;
+                console.log("click, data: ");
+                var d = d3.select(selection).data()[0];
+                d.fixed = true;
+                d3.select(selection).classed("fixedNode", true);
+            })
+            .on('dblclick', function(el) {
+                var selection = el.srcElement;
+                console.log("dblclick, data: ");
+                var d = d3.select(selection).data()[0];
+                d.fixed = false;
+                d3.select(selection).classed("fixedNode", false);
             });
 
         // Adding a tooltip on the links
@@ -443,33 +491,41 @@ function Molecule(graph, options) {
                 link_tooltip.style('top', (d3.event.layerY + 10) + 'px')
                     .style('left', (d3.event.layerX - 25) + 'px');
             })
-            .on('click', function(d) {
-                console.log(d.source.id + " - " + d.target.id + " selected");
-                removeLink(d.source.id,d.target.id);
-                addLink(d.source.id,d.target.id,d.bond==4 ? 1 : d.bond+1 );
-                render();
-            })
-            
-            .on('dblclick', function(d) {
-                console.log(d.source.id + " - " + d.target.id + " selected");
-                removeLink(d.source.id,d.target.id);
-                render();
-            })
             .on('mouseout', function(d) {
                 link_tooltip.style('display', 'none');
                 link_tooltip.style('opacity', 0);
             });
 
+        var linkHandler = singleDoubleClickHandler();
+        parent.svg.selectAll('.link').call(linkHandler);
+        linkHandler
+            .on('click', function(el) {
+                var selection = el.srcElement;
+                console.log("click, data: ");
+                var d = d3.select(selection).data()[0];
+                console.log(d.source.id + " - " + d.target.id + " selected");
+                removeLink(d.source.id, d.target.id);
+                addLink(d.source.id, d.target.id, d.bond == 4 ? 1 : d.bond + 1);
+                render();
+            })
+            .on('dblclick', function(el) {
+                var selection = el.srcElement;
+                console.log("dblclick, data: ");
+                var d = d3.select(selection).data()[0];
+                console.log(d.source.id + " - " + d.target.id + " selected");
+                removeLink(d.source.id, d.target.id);
+                render();
+            });
     }
 
     // Use it for Rendering the molecule in the window / Refreshing it
-    var render = function(){
+    var render = function() {
         emptyContainerContents();
         drawContainerContents();
         configureForces();
         drawBonds();
         drawAtoms();
-        configureTooltips();    
+        configureTooltips();
     }
 
     //    this.svg.on('click', function () {
@@ -480,8 +536,8 @@ function Molecule(graph, options) {
     //        console.log(x,y);
     //    });
 
-    var findNodeIdIndex = function(id){
-            // Find the Index for a particular Node
+    var findNodeIdIndex = function(id) {
+        // Find the Index for a particular Node
         var i = 0;
         while (i < parent.graph.nodes.length) {
             if (parent.graph.nodes[i]['id'] == id) {
@@ -501,7 +557,7 @@ function Molecule(graph, options) {
         });
     };
 
-    var removeNode = function(id){
+    var removeNode = function(id) {
         var j = 0;
         var i = 0;
         while (i < parent.graph.links.length) {
@@ -517,7 +573,7 @@ function Molecule(graph, options) {
         }
     };
 
-    var removeLink = function(source_id,target_id){
+    var removeLink = function(source_id, target_id) {
         for (var i = 0; i < parent.graph.links.length; i++) {
             if (parent.graph.links[i].source.id == source_id && parent.graph.links[i].target.id == target_id) {
                 parent.graph.links.splice(i, 1);
@@ -547,11 +603,11 @@ function Molecule(graph, options) {
     };
 
     var hideAllNodes = function() {
-        d3.selectAll(".atoms").style("opacity",0);
+        d3.selectAll(".atoms").style("opacity", 0);
     };
 
     var showAllNodes = function() {
-        d3.selectAll(".atoms").style("opacity",1);
+        d3.selectAll(".atoms").style("opacity", 1);
     };
 
     var exportAsPNG = function(uniqueMoleculeText) {
@@ -566,23 +622,23 @@ function Molecule(graph, options) {
     }
 
     return {
-        render:render,
-        drawBonds:drawBonds,
-        drawAtoms:drawAtoms,
-        findNodeIdIndex:findNodeIdIndex,
-        addNode:addNode,
-        removeNode:removeNode,
-        removeAllNodes:removeAllNodes,
-        hideAllNodes:hideAllNodes,
-        showAllNodes:showAllNodes,
-        addLink:addLink,
-        removeLink:removeLink,
-        removeAllLinks:removeAllLinks,
-        exportAsPNG:exportAsPNG,
-        configureForces:configureForces,
-        configureTooltips:configureTooltips,
-        drawContainerContents:drawContainerContents,
-        emptyContainerContents:emptyContainerContents
+        render: render,
+        drawBonds: drawBonds,
+        drawAtoms: drawAtoms,
+        findNodeIdIndex: findNodeIdIndex,
+        addNode: addNode,
+        removeNode: removeNode,
+        removeAllNodes: removeAllNodes,
+        hideAllNodes: hideAllNodes,
+        showAllNodes: showAllNodes,
+        addLink: addLink,
+        removeLink: removeLink,
+        removeAllLinks: removeAllLinks,
+        exportAsPNG: exportAsPNG,
+        configureForces: configureForces,
+        configureTooltips: configureTooltips,
+        drawContainerContents: drawContainerContents,
+        emptyContainerContents: emptyContainerContents
     }
 }
 
