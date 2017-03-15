@@ -18,7 +18,10 @@
 <body>
     <div class="container">
         <div id="header">
-            <h2>d3-molecule</h2>
+            <div style="margin-top:16px;margin-bottom:16px;">
+                <a href="#" class="navbar-left"><img src="assets/logo-md.png" class="img img-responsive" width="50"></a><span style="font-size:32px;">d3-molecule</span>
+            </div>
+
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
@@ -57,6 +60,8 @@
                             </div>
                             <input type="button" class="btn btn-lg btn-default fa" id='removeNode' onclick="removeExistingNode()" value="&#xf1f8;" title="remove atom">
                             <input type="button" class="btn btn-lg btn-default fa" id='removeAllNodes' onclick="removeNodes()" value="&#xf1f8; All" title="remove all atoms and links">
+                            <input type="button" class="btn btn-lg btn-default fa" id="hideNodeID" onclick="hideNode()" value="&#xf070;" title="hide atom">
+                            <input type="button" class="btn btn-lg btn-default fa" id="showNodeID" onclick="showNode()" value="&#xf06e;" title="show atom">
                             <input type="button" class="btn btn-lg btn-default fa" id="hideNodesID" onclick="hideNodes()" value="&#xf070; All" title="hide all atoms">
                             <input type="button" class="btn btn-lg btn-default fa" id="showNodesID" onclick="showNodes()" value="&#xf06e; All" title="show all atoms">
                             <input type="button" class="btn btn-lg btn-default fa fa-icon" id="fixAtom" onclick="fixNode()" value="&#xf023;" title="fix atom">

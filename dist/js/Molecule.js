@@ -123,6 +123,7 @@ function Molecule(graph, options) {
 
         nodeg.append("text")
             .attr("dy", ".35em")
+            .attr("class", "atomsText")
             .style("font-size", "10px")
             .attr("text-anchor", "middle")
             .attr("fill", parent.atomTextColor)
@@ -449,7 +450,6 @@ function Molecule(graph, options) {
         nodeHandler
             .on('click', function(el) {
                 var selection = el.srcElement;
-                console.log("click, data: ");
                 var d = d3.select(selection).data()[0];
                 d.selected = true;
                 d3.select(selection).classed("selectedNode", true);
@@ -468,7 +468,7 @@ function Molecule(graph, options) {
                         addLink(to_join[0],to_join[1],1);
                         render();                        
                     }else{
-                        console.log("trying to act smart, eh!");
+                        console.log("trying to act smart, eh! Link already exists buddy!");
                     }
                 }
 
@@ -637,10 +637,6 @@ function Molecule(graph, options) {
         parent.graph.nodes.splice(0, parent.graph.nodes.length);
     };
 
-    var hideAllNodes = function() {
-        d3.selectAll(".atoms").style("opacity", 0);
-    };
-
     var fixNode = function(id){
         parent.graph.nodes[findNodeIdIndex(id)].fixed = true;
 
@@ -688,6 +684,29 @@ function Molecule(graph, options) {
 
     var showAllNodes = function() {
         d3.selectAll(".atoms").style("opacity", 1);
+        d3.selectAll(".atomsText").style("opacity", 1);
+    };
+
+    var hideAllNodes = function() {
+        d3.selectAll(".atoms").style("opacity", 0);
+        d3.selectAll(".atomsText").style("opacity", 0);
+    };
+
+    var showNode = function(id) {
+        var nodeToShow = parent.graph.nodes.filter(function(d) {
+            return d.id == id;
+        });
+        d3.selectAll(".atoms").data(nodeToShow).style("opacity", 1);
+        d3.selectAll(".atomsText").data(nodeToShow).style("opacity", 1);
+    };
+
+    var hideNode = function(id) {
+        var nodeToHide = parent.graph.nodes.filter(function(d) {
+            return d.id == id;
+        });
+        d3.selectAll(".atoms").data(nodeToHide).style("opacity", 0);
+        d3.selectAll(".atomsText").data(nodeToHide).style("opacity", 0);
+
     };
 
     var exportAsPNG = function(uniqueMoleculeText) {
@@ -713,6 +732,8 @@ function Molecule(graph, options) {
         addNode: addNode,
         removeNode: removeNode,
         removeAllNodes: removeAllNodes,
+        hideNode:hideNode,
+        showNode:showNode,
         hideAllNodes: hideAllNodes,
         showAllNodes: showAllNodes,
         addLink: addLink,

@@ -179,9 +179,8 @@ function getMaxAtomRadius() {
 
 // Refresh a Molecule with modified parameters.
 function refreshMolecule() {
-    var key = getUniqueMoleculeText();
-
-    eval("molecule"+key).render();
+    deleteMolecule();
+    newMolecule();
 }
 
 // Deletes a Molecule
@@ -294,6 +293,20 @@ function showNodes() {
 function hideNodes() {
     var key = getUniqueMoleculeText();
     eval("molecule" + key).hideAllNodes();
+}
+
+// Shows all Atoms in a Molecule
+function showNode() {
+    var key = getUniqueMoleculeText();
+    var id = parseInt(document.getElementById("nodeId").value);
+    eval("molecule" + key).showNode(id);
+}
+
+// Hides all Atoms in a Molecule
+function hideNode() {
+    var key = getUniqueMoleculeText();
+    var id = parseInt(document.getElementById("nodeId").value);
+    eval("molecule" + key).hideNode(id);
 }
 
 // Fixes all Atoms in a Molecule
