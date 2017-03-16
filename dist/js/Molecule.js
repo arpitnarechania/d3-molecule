@@ -185,6 +185,10 @@ function Molecule(graph, options) {
         return "translate(" + x + "," + y + ")";
     }
 
+    var distancBetweenPoints = function(x1,y1,x2,y2){
+        return Math.sqrt(Math.pow((x2-x1),2) + Math.pow((y2-y1),2))
+    }
+
    //This is the accessor function 
     var lineFunction = d3.svg.line()
                      .x(function(d) { return d.x; })
@@ -223,6 +227,17 @@ function Molecule(graph, options) {
                 return d.target.y;
             });
 
+        var arc_bond = parent.link.filter(function(d) {
+            return d.bond == 9;
+        });
+
+        arc_bond.selectAll('path').attr("d", function(d) {
+           var dx = d.target.x - d.source.x,
+               dy = d.target.y - d.source.y,
+               dr = Math.sqrt(dx * dx + dy * dy);
+              return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+        });
+
         var wavy_bond = parent.link.filter(function(d) {
             return d.bond == 8;
         });
@@ -239,18 +254,13 @@ function Molecule(graph, options) {
         });
 
         dashed_bond.selectAll("path")
-                    .attr("d", function(d){ 
-                        // left_points = compute_translation(d,'left','double',true);
-                        // right_points = compute_translation(d,'right','double',true);
-                        // var lineData = [{ "x": d.target.x, "y": d.target.y},{ "x": left_points.x, "y": left_points.y},
-                        //                 { "x": left_points.x, "y": left_points.y},{ "x": d.source.x, "y": d.source.y},
-                        //                 { "x": d.source.x, "y": d.source.y},{ "x": right_points.x, "y": right_points.y},
-                        //                 { "x": right_points.x, "y": right_points.y},{ "x": d.target.x, "y": d.target.y}];
-
-                        var lineData = [{ "x": d.target.x, "y": d.target.y},{ "x": d.target.x-5, "y": d.target.y-5},
-                                        { "x": d.target.x-5, "y": d.target.y-5},{ "x": d.source.x, "y": d.source.y},
-                                        { "x": d.source.x, "y": d.source.y},{ "x": d.target.x+5, "y": d.target.y+5},
-                                        { "x": d.target.x+5, "y": d.target.y+5},{ "x": d.target.x, "y": d.target.y}];
+                    .attr("d", function(d){
+                        left_points = compute_translation(d,'left','double',true);
+                        right_points = compute_translation(d,'right','double',true);
+                        var lineData = [{ "x": d.target.x, "y": d.target.y},{ "x": d.target.x + left_points.x, "y": d.target.y + left_points.y},
+                                        { "x": d.target.x + left_points.x, "y": d.target.y + left_points.y},{ "x": d.source.x, "y": d.source.y},
+                                        { "x": d.source.x, "y": d.source.y},{ "x": d.target.x + right_points.x, "y": d.target.y + right_points.y},
+                                        { "x": d.target.x + right_points.x, "y": d.target.y + right_points.y},{ "x": d.target.x, "y": d.target.y}];
 
                         return lineFunction(lineData);
                     });
@@ -260,11 +270,14 @@ function Molecule(graph, options) {
         });
 
         wedged_bond.selectAll("path")
-                    .attr("d", function(d){ 
-                        var lineData = [{ "x": d.target.x, "y": d.target.y},{ "x": d.target.x-2, "y": d.target.y-2},
-                                        { "x": d.target.x-2, "y": d.target.y-2},{ "x": d.source.x, "y": d.source.y},
-                                        { "x": d.source.x, "y": d.source.y},{ "x": d.target.x+2, "y": d.target.y+2},
-                                        { "x": d.target.x+2, "y": d.target.y+2},{ "x": d.target.x, "y": d.target.y}];
+                    .attr("d", function(d){                         
+                        left_points = compute_translation(d,'left','double',true);
+                        right_points = compute_translation(d,'right','double',true);
+
+                        var lineData = [{ "x": d.target.x, "y": d.target.y},{ "x": d.target.x + left_points.x, "y": d.target.y + left_points.y},
+                                        { "x": d.target.x + left_points.x, "y": d.target.y + left_points.y},{ "x": d.source.x, "y": d.source.y},
+                                        { "x": d.source.x, "y": d.source.y},{ "x": d.target.x + right_points.x, "y": d.target.y + right_points.y},
+                                        { "x": d.target.x + right_points.x, "y": d.target.y + right_points.y},{ "x": d.target.x, "y": d.target.y}];
 
                         return lineFunction(lineData);
                     });
@@ -331,6 +344,15 @@ function Molecule(graph, options) {
             .append("g")
             .attr("class", "link")
 
+        var arc_bond = parent.link.filter(function(d) {
+            return d.bond == 9;
+        });
+
+        arc_bond.append('path')
+          .attr('stroke', parent.bondColor)
+          .attr('stroke-width', parent.bondThickness)
+          .attr('fill', 'none');
+
         var wavy_bond = parent.link.filter(function(d) {
             return d.bond == 8;
         });
@@ -351,17 +373,18 @@ function Molecule(graph, options) {
             .style("stroke-dasharray", (parent.bondThickness + "," + parent.bondThickness*1.5))
             .style("stroke-width", parent.bondThickness + "px");
 
-        var dashed_bond = parent.link.filter(function(d){
-            return d.bond == 6;
+
+        var wedged_bond = parent.link.filter(function(d){
+            return d.bond == 7;
         });
 
-        dashed_bond.append("path")
+        wedged_bond.append("path")
                     .style("fill",parent.bondColor)
                     .style("stroke",parent.bondColor)
                     .style("stroke-width",parent.bondThickness*2);
 
-        var wedged_bond = parent.link.filter(function(d){
-            return d.bond == 7;
+        var dashed_bond = parent.link.filter(function(d){
+            return d.bond == 6;
         });
 
         var grad = parent.svg
@@ -386,7 +409,7 @@ function Molecule(graph, options) {
         .attr("stop-color", parent.background)
         .attr("stop-opacity", 1);
 
-        wedged_bond.append("path")
+        dashed_bond.append("path")
                     .style("fill","url(#gradient)")
                     .style("stroke","url(#gradient)")
                     .style("stroke-width",parent.bondThickness);
