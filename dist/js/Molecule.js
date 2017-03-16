@@ -198,7 +198,31 @@ function Molecule(graph, options) {
     var diagonalFunction = d3.svg.diagonal()
       .source(function (d) { return { x: d[0].y, y: d[0].x }; })            
       .target(function (d) { return { x: d[1].y, y: d[1].x }; })
-      .projection(function (d) { return [d.y, d.x]; });
+      .projection(function (d) { 
+        return [d.y, d.x];
+    });
+
+    var Vector2 = function(x,y) {
+      this.magnitude = Math.sqrt(x*x+y*y);
+      this.X = x;
+      this.Y = y;
+    };
+
+    Vector2.prototype.perpendicularClockwise = function(){
+      return new Vector2(-this.Y, this.X);
+    };
+
+    Vector2.prototype.perpendicularCounterClockwise = function(){
+      return new Vector2(this.Y, -this.X);
+    };
+
+    Vector2.prototype.getUnitVector = function(){
+      return new Vector2(this.X/this.magnitude, this.Y/this.magnitude);
+    };
+
+    Vector2.prototype.scale = function(ratio){
+      return new Vector2(ratio*this.X, ratio*this.Y);
+    };
 
     var tick = function() {
         parent.node.attr("transform", function(d) {
@@ -248,10 +272,10 @@ function Molecule(graph, options) {
             return diagonalFunction(curveData);
         })
 
-
         var dashed_bond = parent.link.filter(function(d){
             return d.bond == 6;
         });
+
 
         dashed_bond.selectAll("path")
                     .attr("d", function(d){
@@ -262,8 +286,22 @@ function Molecule(graph, options) {
                                         { "x": d.source.x, "y": d.source.y},{ "x": d.target.x + right_points.x, "y": d.target.y + right_points.y},
                                         { "x": d.target.x + right_points.x, "y": d.target.y + right_points.y},{ "x": d.target.x, "y": d.target.y}];
 
+                        var linkVector = new Vector2(d.target.x-d.source.x,d.target.y-d.source.y).getUnitVector();        
+                        var gradientVector = linkVector.scale(0.5);
+                        console.log(gradientVector);
+                        parent.grad
+                        .attr("x1", 0.5-gradientVector.X)
+                        .attr("y1", 0.5-gradientVector.Y)
+                        .attr("x2", 0.5+gradientVector.X)
+                        .attr("y2", 0.5+gradientVector.Y)
+                        //add an .attr of repeat as spreadMethod
+                        //but it does not work well when bond is being rotated..
+
                         return lineFunction(lineData);
-                    });
+                    })
+                    .style("fill","url(#gradient)")
+                    .style("stroke","url(#gradient)")
+                    .style("stroke-width",parent.bondThickness);
 
         var wedged_bond = parent.link.filter(function(d){
             return d.bond == 7;
@@ -387,23 +425,19 @@ function Molecule(graph, options) {
             return d.bond == 6;
         });
 
-        var grad = parent.svg
+        parent.grad = parent.svg
         .append("defs")
         .append("svg:linearGradient")
         .attr("id", "gradient")
-        .attr("x1", "5%")
-        .attr("y1", "7%")
-        .attr("x2", "10%")
-        .attr("y2", "10%")
-        .attr("spreadMethod", "repeat");
+        .attr("spreadMethod", "pad");
 
-        grad
+        parent.grad
         .append("stop")
         .attr("offset", "0%")
         .attr("stop-color", parent.bondColor)
         .attr("stop-opacity", 1);
 
-        grad
+        parent.grad
         .append("stop")
         .attr("offset", "100%")
         .attr("stop-color", parent.background)
@@ -673,7 +707,7 @@ function Molecule(graph, options) {
                 var d = d3.select(selection).data()[0];
                 console.log(d.source.id + " - " + d.target.id + " selected");
                 removeLink(d.source.id, d.target.id);
-                addLink(d.source.id, d.target.id, d.bond == 8 ? 1 : d.bond + 1);
+                addLink(d.source.id, d.target.id, d.bond == 9 ? 1 : d.bond + 1);
                 render();
             })
             .on('dblclick', function(el) {
