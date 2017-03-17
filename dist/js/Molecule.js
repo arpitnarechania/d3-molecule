@@ -252,7 +252,7 @@ function Molecule(graph, options) {
             });
 
         var arc_bond = parent.link.filter(function(d) {
-            return d.bond == 9;
+            return d.bond == 10;
         });
 
         arc_bond.selectAll('path').attr("d", function(d) {
@@ -263,7 +263,7 @@ function Molecule(graph, options) {
         });
 
         var wavy_bond = parent.link.filter(function(d) {
-            return d.bond == 8;
+            return d.bond == 9;
         });
 
         wavy_bond.selectAll('path')
@@ -272,12 +272,11 @@ function Molecule(graph, options) {
             return diagonalFunction(curveData);
         })
 
-        var dashed_bond = parent.link.filter(function(d){
+        var dashed_gradient_bond = parent.link.filter(function(d){
             return d.bond == 6;
         });
 
-
-        dashed_bond.selectAll("path")
+        dashed_gradient_bond.selectAll("path")
                     .attr("d", function(d){
                         left_points = compute_translation(d,'left','double',true);
                         right_points = compute_translation(d,'right','double',true);
@@ -288,12 +287,13 @@ function Molecule(graph, options) {
 
                         var linkVector = new Vector2(d.target.x-d.source.x,d.target.y-d.source.y).getUnitVector();        
                         var gradientVector = linkVector.scale(0.5);
-                        console.log(gradientVector);
-                        parent.grad
+
+                        parent.grad_gradient
                         .attr("x1", 0.5-gradientVector.X)
                         .attr("y1", 0.5-gradientVector.Y)
                         .attr("x2", 0.5+gradientVector.X)
                         .attr("y2", 0.5+gradientVector.Y)
+                        .attr("spreadMethod", "pad");
                         //add an .attr of repeat as spreadMethod
                         //but it does not work well when bond is being rotated..
 
@@ -303,8 +303,40 @@ function Molecule(graph, options) {
                     .style("stroke","url(#gradient)")
                     .style("stroke-width",parent.bondThickness);
 
-        var wedged_bond = parent.link.filter(function(d){
+        var dashed_striped_bond = parent.link.filter(function(d){
             return d.bond == 7;
+        });
+
+
+        dashed_striped_bond.selectAll("path")
+                    .attr("d", function(d){
+                        left_points = compute_translation(d,'left','double',true);
+                        right_points = compute_translation(d,'right','double',true);
+                        var lineData = [{ "x": d.target.x, "y": d.target.y},{ "x": d.target.x + left_points.x, "y": d.target.y + left_points.y},
+                                        { "x": d.target.x + left_points.x, "y": d.target.y + left_points.y},{ "x": d.source.x, "y": d.source.y},
+                                        { "x": d.source.x, "y": d.source.y},{ "x": d.target.x + right_points.x, "y": d.target.y + right_points.y},
+                                        { "x": d.target.x + right_points.x, "y": d.target.y + right_points.y},{ "x": d.target.x, "y": d.target.y}];
+
+                        var linkVector = new Vector2(d.target.x-d.source.x,d.target.y-d.source.y).getUnitVector();        
+                        var gradientVector = linkVector.scale(1);
+
+                        parent.grad_striped
+                        .attr("x1", "0%")
+                        .attr("y1", "0%")
+                        .attr("x2", "10%")
+                        .attr("y2", "10%")
+                        .attr("spreadMethod", "repeat");
+                        //add an .attr of repeat as spreadMethod
+                        //but it does not work well when bond is being rotated..
+
+                        return lineFunction(lineData);
+                    })
+                    .style("fill","url(#gradientStriped)")
+                    .style("stroke","url(#gradientStriped)")
+                    .style("stroke-width",parent.bondThickness);
+
+        var wedged_bond = parent.link.filter(function(d){
+            return d.bond == 8;
         });
 
         wedged_bond.selectAll("path")
@@ -383,7 +415,7 @@ function Molecule(graph, options) {
             .attr("class", "link")
 
         var arc_bond = parent.link.filter(function(d) {
-            return d.bond == 9;
+            return d.bond == 10;
         });
 
         arc_bond.append('path')
@@ -392,7 +424,7 @@ function Molecule(graph, options) {
           .attr('fill', 'none');
 
         var wavy_bond = parent.link.filter(function(d) {
-            return d.bond == 8;
+            return d.bond == 9;
         });
 
         wavy_bond.append('path')
@@ -413,7 +445,7 @@ function Molecule(graph, options) {
 
 
         var wedged_bond = parent.link.filter(function(d){
-            return d.bond == 7;
+            return d.bond == 8;
         });
 
         wedged_bond.append("path")
@@ -421,29 +453,56 @@ function Molecule(graph, options) {
                     .style("stroke",parent.bondColor)
                     .style("stroke-width",parent.bondThickness*2);
 
-        var dashed_bond = parent.link.filter(function(d){
-            return d.bond == 6;
+        var dashed_striped_bond = parent.link.filter(function(d){
+            return d.bond == 7;
         });
 
-        parent.grad = parent.svg
+        parent.grad_striped = parent.svg
         .append("defs")
         .append("svg:linearGradient")
-        .attr("id", "gradient")
+        .attr("id", "gradientStriped")
         .attr("spreadMethod", "pad");
 
-        parent.grad
+        parent.grad_striped
         .append("stop")
         .attr("offset", "0%")
         .attr("stop-color", parent.bondColor)
         .attr("stop-opacity", 1);
 
-        parent.grad
+        parent.grad_striped
         .append("stop")
         .attr("offset", "100%")
         .attr("stop-color", parent.background)
         .attr("stop-opacity", 1);
 
-        dashed_bond.append("path")
+        dashed_striped_bond.append("path")
+                    .style("fill","url(#gradientStriped)")
+                    .style("stroke","url(#gradientStriped)")
+                    .style("stroke-width",parent.bondThickness);
+
+        var dashed_gradient_bond = parent.link.filter(function(d){
+            return d.bond == 6;
+        });
+
+        parent.grad_gradient = parent.svg
+        .append("defs")
+        .append("svg:linearGradient")
+        .attr("id", "gradient")
+        .attr("spreadMethod", "pad");
+
+        parent.grad_gradient
+        .append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", parent.bondColor)
+        .attr("stop-opacity", 1);
+
+        parent.grad_gradient
+        .append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", parent.background)
+        .attr("stop-opacity", 1);
+
+        dashed_gradient_bond.append("path")
                     .style("fill","url(#gradient)")
                     .style("stroke","url(#gradient)")
                     .style("stroke-width",parent.bondThickness);
@@ -652,7 +711,7 @@ function Molecule(graph, options) {
 
                 if(to_join.length >= 2){
                     to_join.forEach(function(id){
-                        parent.graph.nodes[findNodeIdIndex(id)].selected = false;
+                        parent.graph.nodes[findNodeIndexFromId(id)].selected = false;
                         parent.svg.selectAll(".atoms").classed("selectedNode", false);
                     });
                 }
@@ -707,7 +766,7 @@ function Molecule(graph, options) {
                 var d = d3.select(selection).data()[0];
                 console.log(d.source.id + " - " + d.target.id + " selected");
                 removeLink(d.source.id, d.target.id);
-                addLink(d.source.id, d.target.id, d.bond == 9 ? 1 : d.bond + 1);
+                addLink(d.source.id, d.target.id, d.bond == 10 ? 1 : d.bond + 1);
                 render();
             })
             .on('dblclick', function(el) {
@@ -749,12 +808,25 @@ function Molecule(graph, options) {
         return true;
     };
 
-    var findNodeIdIndex = function(id) {
+    var findNodeIndexFromId = function(id) {
+
         // Find the Index for a particular Node
         var i = 0;
         while (i < parent.graph.nodes.length) {
             if (parent.graph.nodes[i]['id'] == id) {
                 return i;
+            }
+            i++;
+        }
+    };
+
+    var findNodeIdFromIndex = function(index) {
+
+        // Find the Index for a particular Node
+        var i = 0;
+        while (i < parent.graph.nodes.length) {
+            if (index == id) {
+                return parent.graph.nodes[i]['id'];
             }
             i++;
         }
@@ -796,8 +868,8 @@ function Molecule(graph, options) {
     }
 
     var addLink = function(source_id, target_id, bond) {
-        var source_index = findNodeIdIndex(source_id);
-        var target_index = findNodeIdIndex(target_id);
+        var source_index = findNodeIndexFromId(source_id);
+        var target_index = findNodeIndexFromId(target_id);
 
         var link_object = {
             "source": source_index,
@@ -816,23 +888,22 @@ function Molecule(graph, options) {
     };
 
     var fixNode = function(id){
-        parent.graph.nodes[findNodeIdIndex(id)].fixed = true;
+        parent.graph.nodes[findNodeIndexFromId(id)].fixed = true;
+        d3.selectAll(".atoms").each(function(d){
+            if(d.fixed){
+                d3.select(this).classed("fixedNode",true);
+            }
 
-        var nodeToFix = parent.graph.nodes.filter(function(d) {
-            return d.id == id;
         });
-
-        d3.selectAll(".atoms").data(nodeToFix).classed("fixedNode",true);
    }
 
     var unfixNode = function(id){
-        parent.graph.nodes[findNodeIdIndex(id)].fixed = false;
-        
-        var nodeToUnfix = parent.graph.nodes.filter(function(d) {
-            return d.id == id;
+        parent.graph.nodes[findNodeIndexFromId(id)].fixed = false;
+        d3.selectAll(".atoms").each(function(d){
+            if(d.fixed){
+                d3.select(this).classed("fixedNode",false);
+            }
         });
-
-        d3.selectAll(".atoms").data(nodeToUnfix).classed("fixedNode",false);
     }
 
     var fixAllNodes = function() {
@@ -906,7 +977,7 @@ function Molecule(graph, options) {
         unfixAllNodes:unfixAllNodes,
         drawBonds: drawBonds,
         drawAtoms: drawAtoms,
-        findNodeIdIndex: findNodeIdIndex,
+        findNodeIndexFromId: findNodeIndexFromId,
         addNode: addNode,
         removeNode: removeNode,
         removeAllNodes: removeAllNodes,
