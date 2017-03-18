@@ -1,6 +1,6 @@
 ToDo Features:-
 
-1) Positive, Negative Charges
+1) Positive, Negative Charges. [DONE]
 2) 3D viewer
 3) SMILES and other notation translation support
 4) Equation Support
