@@ -39,6 +39,7 @@
                             <select class="form-control " id="MoleculeId"></select>
                             <input type="button" class="btn btn-lg btn-default fa" id='new' onclick="newMolecule()" title="add new molecule" value="&#xf055;">
                             <input type="button" class="btn btn-lg btn-default fa" id='refresh' onclick="refreshMolecule()" title="refresh molecule" value="&#xf021;">
+                            <input type="button" class="btn btn-lg btn-default fa" id='recycle' onclick="recycleMolecule()" title="recycle molecule" value="&#xf1b8;">
                             <input type="button" class="btn btn-lg btn-default fa" id='delete' onclick="deleteMolecule()" title="delete molecule" value="&#xf1f8;">
                             <input type="button" class="btn btn-lg btn-default fa" id='save' onclick="exportSvgAsPNG()" title="export molecule as png" value="&#xf019;">
                         </div>
@@ -53,6 +54,15 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <select class="form-control " id="Atom"></select>
+                                <select id="Charge" class="form-control">
+                                <option value="" selected>No Charge</option>
+                                <option value="+">Positive</option>
+                                <option value="-">Negative</option>
+                                </select>
+                            <div class="input-group">
+                                <span class="input-group-addon"># Charge</span>
+                                <input style="width:75px" id="noOfCharges" type="number" class="form-control" min=1 value=1 placeholder="number">
+                            </div>
                             <input type="button" class="btn btn-lg btn-default fa" id="addNode" onclick="addNewNode()" title="add atom" value="&#xf055;">
                         </div>
                     </form>
@@ -61,7 +71,7 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-addon">Node Id</span>
-                                <input style="width:75px" id="nodeId" type="number" class="form-control  " placeholder="num">
+                                <input style="width:75px" id="nodeId" type="number" class="form-control" min=0 placeholder="num">
                             </div>
                             <input type="button" class="btn btn-lg btn-default fa" id='removeNode' onclick="removeExistingNode()" value="&#xf1f8;" title="remove atom">
                             <input type="button" class="btn btn-lg btn-default fa" id='removeAllNodes' onclick="removeNodes()" value="&#xf1f8; All" title="remove all atoms and links">
@@ -87,7 +97,7 @@
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon">Max Radius</span>
-                                <input style="width:75px" id="maxAtomRadius" type="number" value=6 class="form-control  " placeholder="pixels">
+                                <input style="width:75px" id="maxAtomRadius" type="number" value=6 min=1 class="form-control  " placeholder="pixels">
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon">Text Color</span>
@@ -95,7 +105,7 @@
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon">Border Thickness</span>
-                                <input style="width:75px" id="atomBorderThickness" type="number" value=1 class="form-control  " placeholder="pixels">
+                                <input style="width:75px" id="atomBorderThickness" type="number" value=1 min=0 class="form-control  " placeholder="pixels">
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon">Border Color</span>
@@ -112,27 +122,14 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-addon">Source Id</span>
-                                <input style="width:75px" id="linkSourceId" type="number" class="form-control " placeholder="num">
+                                <input style="width:75px" id="linkSourceId" type="number" class="form-control" min=0 placeholder="num">
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon">Target Id</span>
-                                <input style="width:75px" id="linkTargetId" type="number" class="form-control " placeholder="num">
+                                <input style="width:75px" id="linkTargetId" type="number" class="form-control" min=0 placeholder="num">
                             </div>
                             <input type="button" class="btn btn-lg btn-default fa" id='removeLink' onclick="removeExistingLink()" value="&#xf127;" title="remove bond">
                             <input type="button" class="btn btn-lg btn-default fa" id='removeAllLinks' onclick="removeLinks()" value="&#xf127; All" title="remove all bonds">
-                        </div>
-                    </form>
-                    <br>
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon">Source Id</span>
-                                <input style="width:75px" id="sourceId" type="number" class="form-control " placeholder="num">
-                            </div>
-                            <div class="input-group">
-                                <span class="input-group-addon">Target Id</span>
-                                <input style="width:75px" id="targetId" type="number" class="form-control " placeholder="num">
-                            </div>
                             <div class="input-group">
                                 <span class="input-group-addon">Bond Type</span>
                                 <select id="Bond" class="form-control ">
@@ -156,11 +153,11 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-addon">Thickness</span>
-                                <input style="width:75px" id="bondThickness" type="number" value=2 class="form-control  " placeholder="pixels">
+                                <input style="width:75px" id="bondThickness" type="number" value=2 min=0 class="form-control" placeholder="pixels">
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon">Color</span>
-                                <input style="width:75px" id="bondColor" type="color" value="#000000" class="form-control  " placeholder="text">
+                                <input style="width:75px" id="bondColor" type="color" value="#000000" class="form-control" placeholder="text">
                             </div>
                         </div>
                     </form>
@@ -173,11 +170,11 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-lg fa-arrows-h"></i></span>
-                                <input style="width:75px" id="canvasWidth" type="number" value=500 class="form-control " placeholder="pixels">
+                                <input style="width:75px" id="canvasWidth" type="number" value=500 min=0 class="form-control " placeholder="pixels">
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-lg fa-arrows-v"></i></span>
-                                <input style="width:75px" id="canvasHeight" type="number" value=500 class="form-control " placeholder="pixels">
+                                <input style="width:75px" id="canvasHeight" type="number" value=500 min=0 class="form-control " placeholder="pixels">
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon">Background</span>
@@ -185,7 +182,7 @@
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon">Border Thickness</span>
-                                <input style="width:75px" id="canvasBorderThickness" type="number" value=3 class="form-control " placeholder="pixels">
+                                <input style="width:75px" id="canvasBorderThickness" type="number" value=3 min=0 class="form-control " placeholder="pixels">
                             </div>
                             <div class="input-group">
                                 <span class="input-group-addon">Border Color</span>

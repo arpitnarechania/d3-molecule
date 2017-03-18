@@ -124,13 +124,26 @@ function Molecule(graph, options) {
         nodeg.append("text")
             .attr("dy", ".35em")
             .attr("class", "atomsText")
-            .style("font-size", "10px")
+            .style("font-size", "0.85em")
             .attr("text-anchor", "middle")
             .attr("fill", parent.atomTextColor)
             .style("pointer-events", "none")
             .text(function(d) {
                 return d.atom;
             });
+
+        nodeg.append("text")
+            .attr("dy", "-.40em")
+            .attr("dx", ".50em")
+            .attr("class", "atomsText")
+            .style("font-size", "0.85em")
+            .attr("text-anchor", "start")
+            .attr("fill", parent.atomTextColor)
+            .style("pointer-events", "none")
+            .text(function(d) {
+                return d.charge;
+            });
+
     }
 
     var thetaXScale = d3.scale.linear()
@@ -833,12 +846,13 @@ function Molecule(graph, options) {
     };
 
     // Add and remove Elements on the graph object
-    var addNode = function(atom, size) {
+    var addNode = function(atom, size, chargeString) {
         parent.maxNodeId += 1;
         parent.graph.nodes.push({
             "id": parent.maxNodeId,
             "atom": atom,
-            "size": size
+            "size": size,
+            "charge":chargeString
         });
     };
 

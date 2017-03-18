@@ -9,15 +9,18 @@ var Examples = {
     "nodes": [
       {
         "id": 0,
-        "atom": "O"
+        "atom": "O",
+        "charge":""
       },
       {
         "id": 1,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 2,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       }
     ],
     "links": [
@@ -37,19 +40,23 @@ var Examples = {
     "nodes": [
       {
         "id": 0,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 1,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 2,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 3,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       }
     ],
     "links": [
@@ -74,51 +81,63 @@ var Examples = {
     "nodes": [
       {
         "id": 0,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 1,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 2,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 3,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 4,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 5,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 6,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 7,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 8,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 9,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 10,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 11,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       }
     ],
     "links": [
@@ -188,39 +207,48 @@ var Examples = {
     "nodes": [
       {
         "id": 0,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 1,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 2,
-        "atom": "O"
+        "atom": "O",
+        "charge":""
       },
       {
         "id": 3,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 4,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 5,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 6,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 7,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 8,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
     ],
     "links": [
@@ -270,75 +298,93 @@ var Examples = {
     "nodes": [
       {
         "id": 0,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 1,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 2,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 3,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 4,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 5,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 6,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 7,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 8,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 9,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 10,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 11,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 12,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 13,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 14,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 15,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 16,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 17,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       }
     ],
     "links": [
@@ -443,43 +489,53 @@ var Examples = {
     "nodes": [
       {
         "id": 0,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 1,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 2,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 3,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 4,
-        "atom": "N"
+        "atom": "N",
+        "charge":""
       },
       {
         "id": 5,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 6,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 7,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 8,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 9,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       }
     ],
     "links": [
@@ -539,39 +595,48 @@ var Examples = {
     "nodes": [
       {
         "id": 0,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 1,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 2,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 3,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 4,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 5,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 6,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 7,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 8,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       }
     ],
     "links": [
@@ -626,11 +691,13 @@ var Examples = {
     "nodes": [
       {
         "id": 0,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 1,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       }
     ],
     "links": [
@@ -645,11 +712,13 @@ var Examples = {
     "nodes": [
       {
         "id": 0,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 1,
-        "atom": "Cl"
+        "atom": "Cl",
+        "charge":""
       }
     ],
     "links": [
@@ -664,35 +733,43 @@ var Examples = {
     "nodes": [
       {
         "id": 0,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 1,
-        "atom": "C"
+        "atom": "C",
+        "charge":""
       },
       {
         "id": 2,
-        "atom": "O"
+        "atom": "O",
+        "charge":""
       },
       {
         "id": 3,
-        "atom": "O"
+        "atom": "O",
+        "charge":""
       },
       {
         "id": 4,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 5,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 6,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       },
       {
         "id": 7,
-        "atom": "H"
+        "atom": "H",
+        "charge":""
       }
 
     ],
@@ -738,15 +815,18 @@ var Examples = {
     "nodes": [
       {
         "id": 0,
-        "atom": "S"
+        "atom": "S",
+        "charge":""
       },
       {
         "id": 1,
-        "atom": "O"
+        "atom": "O",
+        "charge":""
       },
       {
         "id": 2,
-        "atom": "O"
+        "atom": "O",
+        "charge":""
       }
     ],
     "links": [
@@ -766,15 +846,18 @@ var Examples = {
     "nodes": [
       {
         "id": 0,
-        "atom": "Mg"
+        "atom": "Mg",
+        "charge":""
       },
       {
         "id": 1,
-        "atom": "Cl"
+        "atom": "Cl",
+        "charge":""
       },
       {
         "id": 2,
-        "atom": "Cl"
+        "atom": "Cl",
+        "charge":""
       }
     ],
     "links": [
@@ -794,31 +877,38 @@ var Examples = {
     "nodes": [
       {
         "id": 0,
-        "atom": "Fe"
+        "atom": "Fe",
+        "charge":""
       },
       {
         "id": 1,
-        "atom": "Fe"
+        "atom": "Fe",
+        "charge":""
       },
       {
         "id": 2,
-        "atom": "Fe"
+        "atom": "Fe",
+        "charge":""
       },
       {
         "id": 3,
-        "atom": "O"
+        "atom": "O",
+        "charge":""
       },
       {
         "id": 4,
-        "atom": "O"
+        "atom": "O",
+        "charge":""
       },
       {
         "id": 5,
-        "atom": "O"
+        "atom": "O",
+        "charge":""
       },
       {
         "id": 6,
-        "atom": "O"
+        "atom": "O",
+        "charge":""
       }
     ],
     "links": [

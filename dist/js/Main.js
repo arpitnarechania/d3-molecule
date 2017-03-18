@@ -92,6 +92,14 @@ function getMoleculeAlpha() {
     return alpha;
 }
 
+function getNoOfCharges(){
+    var noOfCharges = parseInt($("#noOfCharges").val());
+    if (isNaN(noOfCharges)) {
+        throw Error("noOfCharges must be a numeric entity");
+    }
+    return noOfCharges;
+}
+
 // Returns the Theta between atoms in the molecule
 function getMoleculeTheta() {
     var theta = parseFloat($("#theta").val());
@@ -177,10 +185,18 @@ function getMaxAtomRadius() {
     return maxAtomRadius;
 }
 
-// Refresh a Molecule with modified parameters.
-function refreshMolecule() {
+// Recycles a Molecule with modified parameters.
+function recycleMolecule() {
     deleteMolecule();
     newMolecule();
+}
+
+// Refresh a Molecule with modified parameters.
+// Click this if the force-directed gets stuck in calculating 
+// if you add bonds very quickly...
+function refreshMolecule() {
+    var key = getUniqueMoleculeText();
+    eval("molecule"+key).configureForces();
 }
 
 // Deletes a Molecule
@@ -253,10 +269,21 @@ function addNewNode() {
     var atomElement = document.getElementById("Atom");
     var atom = atomElement.options[atomElement.selectedIndex].value;
 
+    var chargeElement = document.getElementById("Charge");
+    var charge = chargeElement.options[chargeElement.selectedIndex].value;
+
+    var noOfCharges = getNoOfCharges();
+    var chargeString = "";
+    if(charge===""){
+        chargeString = "";
+    }else{
+        chargeString = noOfCharges + charge;
+    }
+
     var atomSizeBasis = getAtomSizeBasis();
     var size = Elements[atom][atomSizeBasis];
 
-    eval("molecule"+key).addNode(atom, size);
+    eval("molecule"+key).addNode(atom, size, chargeString);
     eval("molecule"+key).render();
 }
 
@@ -264,8 +291,8 @@ function addNewNode() {
 function addNewLink() {
     var key = getUniqueMoleculeText();
 
-    var source_id = parseInt(document.getElementById("sourceId").value);
-    var target_id = parseInt(document.getElementById("targetId").value);
+    var source_id = parseInt(document.getElementById("linkSourceId").value);
+    var target_id = parseInt(document.getElementById("linkTargetId").value);
     var bondElement = document.getElementById("Bond");
     var bond = bondElement.options[bondElement.selectedIndex].value;
 
