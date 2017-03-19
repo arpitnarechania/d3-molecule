@@ -64,6 +64,24 @@ function getCanvasBorderThickness() {
     return canvasBorderThickness;
 }
 
+// Returns the Border radius X of the viewport
+function getCanvasBorderRadiusX() {
+    var canvasBorderRadiusX = parseFloat($("#canvasBorderRadiusX").val());
+    if (isNaN(canvasBorderRadiusX)) {
+        throw Error("canvasBorderRadiusX must be a numeric entity");
+    }
+    return canvasBorderRadiusX;
+}
+
+// Returns the Border radius Y of the viewport
+function getCanvasBorderRadiusY() {
+    var canvasBorderRadiusY = parseFloat($("#canvasBorderRadiusY").val());
+    if (isNaN(canvasBorderRadiusY)) {
+        throw Error("canvasBorderRadiusY must be a numeric entity");
+    }
+    return canvasBorderRadiusY;
+}
+
 // Returns the Border color of the viewport
 function getCanvasBorderColor() {
     var canvasBorderColor = $("#canvasBorderColor").val();
@@ -227,8 +245,16 @@ function newMolecule() {
 
     var div = document.createElement("div");
     div.id = "Container" + key;
-    div.width = getCanvasWidth();
-    container.insertBefore(div, container.firstChild); // OR container.append(div); if div to be added below.
+    div.className += " ui-widget-content inlineDivs";
+    console.log(getCanvasWidth());
+    $("#Container" + key).width(getCanvasWidth());
+    //container.insertBefore(div, container.firstChild); // OR container.append(div); if div to be added below.
+    container.append(div);
+
+    $( function() {
+        $("#Container" + key).resizable({handles: 'e, w'});
+        $("#Container" + key).draggable();
+      });
 
     var colorScheme = ["#2AA9CC", "#FCF78A", "#4FFFC5", "#FFA09B", "#CC3F87", "#32FF47", "#E8C72E", "#942EE8", "#3FD6FF"];
 
@@ -254,7 +280,9 @@ function newMolecule() {
         atomBorderColor: getAtomBorderColor(),
         atomTextColor: getAtomTextColor(),
         atomSizeBasis: getAtomSizeBasis(),
-        boundingBox: isCanvasBoundingBox()
+        boundingBox: isCanvasBoundingBox(),
+        borderRadiusX: getCanvasBorderRadiusX(),
+        borderRadiusY: getCanvasBorderRadiusY(),
     };
 
 

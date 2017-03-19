@@ -22,8 +22,6 @@ function loadPeriodicTableElements() {
 function Molecule(graph, options) {
 
     this.graph = graph; // making the graph object available in the class/function scope.
-    this.options = options; // making the chart options object available in the class/function scope.
-
     this.width = options.width; // Width of svg container
     this.height = options.height; // Height of svg container
     this.charge = options.charge; // Positive for Attraction. Negative for Repulsion.
@@ -45,6 +43,8 @@ function Molecule(graph, options) {
     this.borderThickness = options.borderThickness; // The viewport border thickness
     this.borderColor = options.borderColor; // The viewport border color
     this.boundingBox = options.boundingBox; // Whether to restrict farther atoms to be in viewport or not
+    this.borderRadiusX = options.borderRadiusX; // Border radius x component
+    this.borderRadiusY = options.borderRadiusY; // Border radius y component
 
     var parent = this;
 
@@ -74,6 +74,8 @@ function Molecule(graph, options) {
             .attr("height", parent.height)
             .style("background-color", parent.background);
 
+
+
         // This aspect of code takes care of the Responsive nature of the div.
         var aspect = parent.width / parent.height;
         $(window).on("resize", function() {
@@ -92,6 +94,8 @@ function Molecule(graph, options) {
         var borderPath = parent.svg.append("rect")
             .attr("x", 0)
             .attr("y", 0)
+            .attr("rx", parent.borderRadiusX)
+            .attr("ry", parent.borderRadiusY)
             .attr("height", parent.height)
             .attr("width", parent.width)
             .style("stroke", parent.borderColor)

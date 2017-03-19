@@ -8,22 +8,22 @@ describe('default settings', function() {
 
         it('default canvas width should be set and equal to 500', function() {
             var val = getCanvasWidth();
-            assert.equal(val, 500);
+            assert.equal(val, 300);
         });
 
         it('default canvas height should be set and equal to 500', function() {
             var val = getCanvasHeight();
-            assert.equal(val, 500);
+            assert.equal(val, 300);
         });
 
         it('default canvas background colour should be set and equal to #efefef', function() {
             var val = getCanvasBackgroundColor();
-            assert.equal(val, "#efefef");
+            assert.equal(val, "#ffffff");
         });
 
         it('default canvas border thickness should be set and equal to 1', function() {
             var val = getCanvasBorderThickness();
-            assert.equal(val, 3);
+            assert.equal(val, 1);
         });
 
         it('default canvas border colour should be set and equal to #000000', function() {
@@ -156,7 +156,7 @@ describe('validate examples', function() {
 
     it('the nodes property must be an array of objects with "atom","id" properties', function() {
         Object.keys(Examples).forEach(function(key){
-            Examples[key].nodes.should.all.keys('atom','id');
+            Examples[key].nodes.should.all.keys('atom','id','charge');
         });
     });
 

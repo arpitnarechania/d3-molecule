@@ -5,8 +5,10 @@
     <title>d3-molecule</title>
     <link rel="shortcut icon" type="image/png" href="assets/favicon.png" />
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <link href="node_modules/jquery-ui-dist/jquery-ui.min.css" rel="stylesheet">
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <script src="node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css">
     <script src="node_modules/blueimp-canvas-to-blob/js/canvas-to-blob.min.js"></script>
@@ -163,19 +165,27 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-lg fa-arrows-h"></i></span>
-                                        <input style="width:75px" id="canvasWidth" type="number" value=500 min=0 class="form-control " placeholder="pixels">
+                                        <input style="width:75px" id="canvasWidth" type="number" value=300 min=0 class="form-control " placeholder="pixels">
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-lg fa-arrows-v"></i></span>
-                                        <input style="width:75px" id="canvasHeight" type="number" value=500 min=0 class="form-control " placeholder="pixels">
+                                        <input style="width:75px" id="canvasHeight" type="number" value=300 min=0 class="form-control " placeholder="pixels">
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon">Background</span>
-                                        <input style="width:75px" id="canvasBackgroundColor" type="color" value="#EFEFEF" class="form-control " placeholder="text">
+                                        <input style="width:75px" id="canvasBackgroundColor" type="color" value="#ffffff" class="form-control " placeholder="text">
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon">Border Thickness</span>
-                                        <input style="width:75px" id="canvasBorderThickness" type="number" value=3 min=0 class="form-control " placeholder="pixels">
+                                        <input style="width:75px" id="canvasBorderThickness" type="number" value=1 min=0 class="form-control " placeholder="pixels">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Border Radius X</span>
+                                        <input style="width:75px" id="canvasBorderRadiusX" type="number" value=15 min=0 class="form-control " placeholder="pixels">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Border Radius Y</span>
+                                        <input style="width:75px" id="canvasBorderRadiusY" type="number" value=15 min=0 class="form-control " placeholder="pixels">
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon">Border Color</span>

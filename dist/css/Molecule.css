@@ -20,3 +20,9 @@
     stroke:red !important;
     stroke-width:2.5px;
 }
+
+.inlineDivs{
+	float:left;
+	display:inline;
+	margin:4px;
+}
