@@ -2,7 +2,7 @@
   "name": "d3-molecule",
   "version": "1.0.0",
   "description": "Javascript and D3 based Chemoinformatic Tool to make learning Chemical Bonding easy",
-  "repository": "https://arpitnarechania@bitbucket.org/arpitnarechania/d3-molecule.git",
+  "repository": "https://github.com/arpitnarechania/d3-molecule.git",
   "main": "index.html",
   "scripts": {
     "test": "mocha"
