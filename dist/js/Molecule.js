@@ -1,3 +1,28 @@
+/*****************************************************************************************
+    @author: Arpit Narechania
+    @email: arpitnarechania@gmail.com
+    @project: d3-molecule
+
+    Copyright 2017 Arpit Narechania
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+    DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+    OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+    OR OTHER DEALINGS IN THE SOFTWARE.
+******************************************************************************************/
+
 // This must be global so multiple instances of the Molecule class share the same
 // static Elements instead of each having its own instance of Elements.
 var Elements = {};
@@ -45,6 +70,7 @@ function Molecule(graph, options) {
     this.boundingBox = options.boundingBox; // Whether to restrict farther atoms to be in viewport or not
     this.borderRadiusX = options.borderRadiusX; // Border radius x component
     this.borderRadiusY = options.borderRadiusY; // Border radius y component
+    this.detailedTooltips = options.detailedTooltips; // Border radius y component
 
     var parent = this;
 
@@ -68,7 +94,7 @@ function Molecule(graph, options) {
 
         parent.svg = d3.select(parent.domElement).append("svg")
             .attr("viewBox", "0 0 " + parent.width + " " + parent.height)
-            .attr("perserveAspectRatio", "xMinYMid")
+            .attr("preserveAspectRatio", "xMinYMid")
             .attr("class", "svg" + parent.uniqueId)
             .attr("width", parent.width)
             .attr("height", parent.height)
@@ -680,9 +706,12 @@ function Molecule(graph, options) {
 
                 var rows = "";
                 rows += "<tr><td>" + "Node Id" + "</td><td>" + d.id + "</td></tr>";
-                Object.keys(Elements[d.atom]).forEach(function(key) {
-                    rows += "<tr><td>" + key + "</td><td>" + Elements[d.atom][key] + "</td></tr>";
-                })
+                
+                if(parent.detailedTooltips){
+                    Object.keys(Elements[d.atom]).forEach(function(key) {
+                        rows += "<tr><td>" + key + "</td><td>" + Elements[d.atom][key] + "</td></tr>";
+                    })
+                }
                 var html = "<table><tbody>" + rows + "</tbody></table>";
                 node_tooltip.select('.value').html(html);
 
@@ -703,8 +732,12 @@ function Molecule(graph, options) {
         parent.svg.selectAll('.atoms').call(nodeHandler);
         nodeHandler
             .on('click', function(el) {
+
                 var selection = el.srcElement;
+                
                 var d = d3.select(selection).data()[0];
+
+                $("#nodeId").val(d.id);
 
                 if(d.selected != true){
                     d.selected = true;

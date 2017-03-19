@@ -1,3 +1,28 @@
+/*****************************************************************************************
+    @author: Arpit Narechania
+    @email: arpitnarechania@gmail.com
+    @project: d3-molecule
+
+    Copyright 2017 Arpit Narechania
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+    EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+    DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+    OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+    OR OTHER DEALINGS IN THE SOFTWARE.
+******************************************************************************************/
+
 // Load the Example Molecules into the Dropdown.
 function fillDropdownWithExamples() {
     var uniqueMoleculeIds = document.getElementById("MoleculeId");
@@ -200,6 +225,12 @@ function isCanvasBoundingBox() {
     return isCanvasBoundingBox;
 }
 
+// Returns boolean true/false if Tooltips are to be shown in detail
+function showDetailedTooltips() {
+    var detailedTooltipsFlag = $("#detailedTooltips").prop('checked');
+    return detailedTooltipsFlag;
+}
+
 // Returns the maximum atomic radius
 function getMaxAtomRadius() {
     var maxAtomRadius = parseFloat($("#maxAtomRadius").val())
@@ -253,7 +284,7 @@ function newMolecule() {
 
     $( function() {
         $("#Container" + key).resizable({handles: 'e, w'});
-        $("#Container" + key).draggable();
+        $("#Container" + key).draggable({containment: "#container"});
       });
 
     var colorScheme = ["#2AA9CC", "#FCF78A", "#4FFFC5", "#FFA09B", "#CC3F87", "#32FF47", "#E8C72E", "#942EE8", "#3FD6FF"];
@@ -283,6 +314,7 @@ function newMolecule() {
         boundingBox: isCanvasBoundingBox(),
         borderRadiusX: getCanvasBorderRadiusX(),
         borderRadiusY: getCanvasBorderRadiusY(),
+        detailedTooltips: showDetailedTooltips()
     };
 
 
