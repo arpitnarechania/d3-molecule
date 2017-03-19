@@ -25,6 +25,12 @@ function getUniqueMoleculeText() {
     return moleculeUniqueText;
 }
 
+// Return the filename chosen to save the image as..
+function getFilename() {
+    var filename = $("#filename").val();
+    return filename;
+}
+
 // Returns the Width of the viewport
 function getCanvasWidth() {
     var canvasWidth = parseFloat($("#canvasWidth").val());
@@ -388,5 +394,10 @@ function removeExistingNode() {
 // Set-up the export button and call the Object method to do the actual export
 function exportSvgAsPNG() {
     var key = getUniqueMoleculeText();
-    eval("molecule"+key).exportAsPNG(key);
+    var filename = getFilename();
+    if(filename != ""){
+        eval("molecule"+key).exportAsPNG(key,filename);
+    }else{
+        eval("molecule"+key).exportAsPNG(key,key);        
+    }
 }

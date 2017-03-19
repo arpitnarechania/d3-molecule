@@ -701,8 +701,14 @@ function Molecule(graph, options) {
             .on('click', function(el) {
                 var selection = el.srcElement;
                 var d = d3.select(selection).data()[0];
-                d.selected = true;
-                d3.select(selection).classed("selectedNode", true);
+
+                if(d.selected != true){
+                    d.selected = true;
+                    d3.select(selection).classed("selectedNode", true);                    
+                }else{
+                    d.selected = false;
+                    d3.select(selection).classed("selectedNode", false);                    
+                }
 
                 // 1) Check if 2 nodes are fixed, if yes then connect them with bonds.
                 var to_join = [];
@@ -734,9 +740,9 @@ function Molecule(graph, options) {
                 var selection = el.srcElement;
                 console.log("dblclick, data: ");
                 var d = d3.select(selection).data()[0];
-                d.selected = false;
-                d3.select(selection).classed("selectedNode", false);
-            });
+                removeNode(d.id);
+                render();
+           });
 
         // Adding a tooltip on the links
         var link_tooltip = d3.select(parent.domElement)
@@ -972,13 +978,13 @@ function Molecule(graph, options) {
 
     };
 
-    var exportAsPNG = function(uniqueMoleculeText) {
+    var exportAsPNG = function(uniqueMoleculeText,filename) {
 
         var svgString = getSVGString(d3.select(".svg" + uniqueMoleculeText).node());
         svgString2Image(svgString, 2 * parent.width, 2 * parent.height, 'png', save); // passes Blob and filesize String to the callback
 
         function save(dataBlob, filesize) {
-            saveAs(dataBlob, uniqueMoleculeText + '.png'); // FileSaver.js function
+            saveAs(dataBlob, filename + '.png'); // FileSaver.js function
         }
 
     }
