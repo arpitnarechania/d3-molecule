@@ -22,6 +22,8 @@ To use this library then, simply include d3.js, jquery, Molecule.js and Molecule
 <script src="/path/to/jquery.min.js"></script>
 <script src="/path/to/d3.min.js"></script>
 <script src="/path/to/dist/css/Molecule.css"></script>
+<script src="/path/to/dist/js/Elements.js"></script>
+<script src="/path/to/dist/js/Examples.js"></script>
 <script src="/path/to/dist/js/Molecule.js"></script>
 ```
 
@@ -34,51 +36,19 @@ To use this library, you must create a container element and instantiate a new M
 ```
 
 
-Data
-```
-var data = {
-    "nodes": [
-      {
-        "id": 0,
-        "atom": "Mg",
-        "charge":""
-      },
-      {
-        "id": 1,
-        "atom": "Cl",
-        "charge":""
-      },
-      {
-        "id": 2,
-        "atom": "Cl",
-        "charge":""
-      }
-    ],
-    "links": [
-      {
-        "source": 0,
-        "target": 1,
-        "bond": 1
-      },
-      {
-        "source": 0,
-        "target": 2,
-        "bond": 1
-      }
-    ]
-  }
-```
-
 Setting chart parameters
 ``` javascript
 
-    var options = {
+var key = "Benzene";
+var basis = "Atomic Weight";
+
+var options = {
         domElement: "#container",
         uniqueId: 1,
-        width: 500, 
+        width: 500,
         height: 500,
         borderThickness: 1,
-        borderColor: "#ffffff",
+        borderColor: "#000000",
         background: "#ffffff",
         charge: -1000,
         friction: 0.9,
@@ -93,16 +63,30 @@ Setting chart parameters
         atomBorderThickness: 2,
         atomBorderColor: "#000000",
         atomTextColor: "#000000",
-        atomSizeBasis: "Atomic Radius",
+        atomSizeBasis: basis,
         boundingBox: true,
         borderRadiusX: 5,
         borderRadiusY: 5,
         detailedTooltips: true
     };
 
-    var molecule = new Molecule(data,options);
-    molecule.render();
+    var Elements = {};
 
+    function loadPeriodicTableElements() {
+        for (var i = 0; i < periodicTableData.length; i++) {
+            // Preparing a Javascript Object of all Elements
+            Elements[periodicTableData[i]["Symbol"]] = periodicTableData[i];
+        }
+    }
+    loadPeriodicTableElements();
+
+    for (var i = 0; i < Examples[key].nodes.length; i++) {
+        Examples[key].nodes[i]["size"] = Elements[Examples[key].nodes[i]["atom"]][basis];
+    }
+
+    var molecule = new Molecule(Examples[key],options);
+    molecule.render();
+    
 ```
 
 ## Options
@@ -136,7 +120,7 @@ Setting chart parameters
 | `detailedTooltips`            | If detailed info about the element to be shown on hover or not            | boolean  | `true`                     |
 
 # Advanced Usage and Features
-* Clicking the atom selects it
+* Clicking the atom selects it for deleting,fixing,etc (Check the example)
 * Clicking on 2 atoms, joins them by a bond
 * Clicking on a bond, toggles the bond type
 * Double clicking a bond, removes it
