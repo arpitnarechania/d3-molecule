@@ -6,6 +6,9 @@
 
 Check out an example here. [Demo](https://arpitnarechania.github.io/d3-molecule/)
 
+Screenshot:
+![Screenshot](https://raw.githubusercontent.com/arpitnarechania/d3-molecule/master/assets/screenshot.png)
+
 # Installation
 
 Download d3-molecule using npm.
