@@ -36,6 +36,11 @@
 	opacity: 0;
 }
 
+.selectedSVG{
+    stroke:blue !important;
+    stroke-width:10px;
+}
+
 .selectedNode{
     stroke:blue !important;
     stroke-width:2.5px;

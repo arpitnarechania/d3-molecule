@@ -845,13 +845,25 @@ function Molecule(graph, options) {
         configureTooltips();
     }
 
-    //    this.svg.on('click', function () {
-    //        var coordinates = [0, 0];
-    //        coordinates = d3.mouse(this);
-    //        var x = coordinates[0];
-    //        var y = coordinates[1];
-    //        console.log(x,y);
-    //    });
+    parent.svg.on('click', function () {
+
+        var text = parent.domElement;
+        substring = text.substring(10,text.length)
+        $("#MoleculeId option").filter(function() {
+            //may want to use $.trim in here
+            return $(this).text() == substring;
+        }).prop('selected', true);
+
+        d3.selectAll(".svgBorder").classed("selectedSVG", false);
+        d3.select(parent.domElement + " .svgBorder").classed("selectedSVG", true);
+
+        //    $("#MoleculeId").val("4");
+        //    var coordinates = [0, 0];
+        //    coordinates = d3.mouse(this);
+        //    var x = coordinates[0];
+        //    var y = coordinates[1];
+        //    console.log(x,y);
+    });
 
     var noExistingLink = function(source_id,target_id){
         var i = 0;

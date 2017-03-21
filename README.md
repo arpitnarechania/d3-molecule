@@ -124,6 +124,7 @@ var options = {
 
 # Advanced Usage and Features
 * Clicking the atom selects it for deleting,fixing,etc (Check the example)
+* Clicking the svg view port selects it for deleting,refreshing, recycling etc (Check the example)
 * Clicking on 2 atoms, joins them by a bond
 * Clicking on a bond, toggles the bond type
 * Double clicking a bond, removes it
