@@ -148,11 +148,24 @@ Setting chart parameters
 | `atomBorderThickness`         | Atom border thickness                                                     | string   | `1`                        |
 | `atomBorderColor`             | Atom border color                                                         | string   | `'#000000'`                |
 | `atomTextColor`               | Atom text color                                                           | string   | `'#000000'`                |
-| `atomSizeBasis`               | Basis on which the atom circle svgs be rendered                           | string   | `'Atomic Radius'`          |
+| `atomSizeBasis`               | Basis on which the atom circle svgs be rendered                           | string   | `'Atomic Radius'` | '`Atomic Weight '` |
 | `boundingBox`                 | If the molecule should be constrained inside the svg container            | boolean  | `true`                     |
 | `borderRadiusX`               | SVG container's border (X) parameter                                      | number   | `5`                        |
 | `borderRadiusY`               | SVG container's border (Y) parameter                                      | number   | `5`                        |
 | `detailedTooltips`            | If detailed info about the element to be shown on hover or not            | boolean  | `true`                     |
+
+## Bond Types include :- 
+
+* Single
+* Double
+* Triple
+* Quadruple
+* Wedged
+* Wavy
+* Dotted
+* Dashed (Stripes)
+* Dashed (Gradient)
+* Arc
 
 # Test (WIP)
 * Unit test cases in the testrunner.html
