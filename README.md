@@ -1,8 +1,27 @@
 # d3-molecule
 
 **d3-molecule** is an open-source library for learning Chemical Bonding in an interactive way.
-* Still a WIP to add subtle additions, optimizations.
-* Watch/ Star it for further  updates.
+
+![Screenshot](https://raw.githubusercontent.com/arpitnarechania/d3-molecule/master/assets/screenshot.png)
+
+# Usage and Features
+* Clicking the atom selects it
+* Clicking on 2 atoms, joins them by a bond
+* Clicking on a bond, toggles the bond type
+* Clicking on a view port, locks and unlocks it from movement
+* Double clicking a bond, removes it
+* Double clicking an atom, removes it and its bonds
+* Lock/ Unlock atoms to their position if needed.
+* Hide/ Show atoms if needed.
+* Drag and Resizing of molecule container
+* Option to Export molecule as a PNG image
+* Configurable forces, constants of force directed graph for the molecule
+* Configurable style parameters for canvas, atoms, bonds
+
+# Features WIP
+* Molecule Reaction components
+* Loading examples directly from standard notations like SMILE
+* 3-D support
 
 Check out an example here. [Demo](https://arpitnarechania.github.io/d3-molecule/)
 
@@ -134,18 +153,6 @@ Setting chart parameters
 | `borderRadiusX`               | SVG container's border (X) parameter                                      | number   | `5`                        |
 | `borderRadiusY`               | SVG container's border (Y) parameter                                      | number   | `5`                        |
 | `detailedTooltips`            | If detailed info about the element to be shown on hover or not            | boolean  | `true`                     |
-
-# Advanced Usage and Features
-* Clicking the atom selects it
-* Clicking on 2 atoms, joins them by a bond
-* Clicking on a bond, toggles the bond type
-* Double clicking a bond, removes it
-* Double clicking an atom, removes it and its bonds
-* Lock/ Unlock atoms to their position if needed.
-* Hide/ Show atoms if needed.
-* Drag and Resizing of molecule container using the jquery-ui library.
-* Option to Export molecule as a PNG image
-* Some examples exist in the Examples.js file
 
 # Test (WIP)
 * Unit test cases in the testrunner.html
