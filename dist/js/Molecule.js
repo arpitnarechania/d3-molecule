@@ -118,6 +118,7 @@ function Molecule(graph, options) {
         }).trigger("resize");
 
         var borderPath = parent.svg.append("rect")
+            .attr("class","svgBorder")
             .attr("x", 0)
             .attr("y", 0)
             .attr("rx", parent.borderRadiusX)
