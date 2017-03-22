@@ -843,36 +843,35 @@ function Molecule(graph, options) {
         drawBonds();
         drawAtoms();
         configureTooltips();
+
+        parent.svg.on('click', function () {
+            var text = parent.domElement;
+            substring = text.substring(10,text.length)
+            $("#MoleculeId option").filter(function() {
+                //may want to use $.trim in here
+                return $(this).text() == substring;
+            }).prop('selected', true);
+
+            if($(parent.domElement + " .svgBorder").hasClass("selectedSVG")){
+                    $(parent.domElement + " .svgBorder").removeClass("selectedSVG");
+                    $(parent.domElement).draggable({disabled: false});
+            }
+            else{
+                    d3.selectAll(".svgBorder").classed("selectedSVG", false);
+                    $("#container").children().draggable({disabled: false});
+
+                    $(parent.domElement + " .svgBorder").addClass("selectedSVG");
+                    $(parent.domElement).draggable({disabled: true});
+            }
+
+            //    $("#MoleculeId").val("4");
+            //    var coordinates = [0, 0];
+            //    coordinates = d3.mouse(this);
+            //    var x = coordinates[0];
+            //    var y = coordinates[1];
+            //    console.log(x,y);
+        });
     }
-
-    parent.svg.on('click', function () {
-
-        var text = parent.domElement;
-        substring = text.substring(10,text.length)
-        $("#MoleculeId option").filter(function() {
-            //may want to use $.trim in here
-            return $(this).text() == substring;
-        }).prop('selected', true);
-
-        if($(parent.domElement + " .svgBorder").hasClass("selectedSVG")){
-                $(parent.domElement + " .svgBorder").removeClass("selectedSVG");
-                $(parent.domElement).draggable({disabled: false});
-        }
-        else{
-                d3.selectAll(".svgBorder").classed("selectedSVG", false);
-                $("#container").children().draggable({disabled: false});
-
-                $(parent.domElement + " .svgBorder").addClass("selectedSVG");
-                $(parent.domElement).draggable({disabled: true});
-        }
-
-        //    $("#MoleculeId").val("4");
-        //    var coordinates = [0, 0];
-        //    coordinates = d3.mouse(this);
-        //    var x = coordinates[0];
-        //    var y = coordinates[1];
-        //    console.log(x,y);
-    });
 
     var noExistingLink = function(source_id,target_id){
         var i = 0;
