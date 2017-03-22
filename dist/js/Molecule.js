@@ -854,8 +854,17 @@ function Molecule(graph, options) {
             return $(this).text() == substring;
         }).prop('selected', true);
 
-        d3.selectAll(".svgBorder").classed("selectedSVG", false);
-        d3.select(parent.domElement + " .svgBorder").classed("selectedSVG", true);
+        if($(parent.domElement + " .svgBorder").hasClass("selectedSVG")){
+                $(parent.domElement + " .svgBorder").removeClass("selectedSVG");
+                $(parent.domElement).draggable({disabled: false});
+        }
+        else{
+                d3.selectAll(".svgBorder").classed("selectedSVG", false);
+                $("#container").children().draggable({disabled: false});
+
+                $(parent.domElement + " .svgBorder").addClass("selectedSVG");
+                $(parent.domElement).draggable({disabled: true});
+        }
 
         //    $("#MoleculeId").val("4");
         //    var coordinates = [0, 0];

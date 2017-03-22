@@ -1,13 +1,29 @@
 # d3-molecule
 
 **d3-molecule** is an open-source library for learning Chemical Bonding in an interactive way.
-* Still a WIP to add subtle additions, optimizations.
-* Watch/ Star it for further  updates.
+
+![Screenshot](https://raw.githubusercontent.com/arpitnarechania/d3-molecule/master/assets/screenshot.png)
+
+# Usage and Features
+* Clicking the atom selects it
+* Clicking on 2 atoms, joins them by a bond
+* Clicking on a bond, toggles the bond type
+* Clicking on a view port, locks and unlocks it from movement
+* Double clicking a bond, removes it
+* Double clicking an atom, removes it and its bonds
+* Lock/ Unlock atoms to their position if needed.
+* Hide/ Show atoms if needed.
+* Drag and Resizing of molecule container
+* Option to Export molecule as a PNG image
+* Configurable forces, constants of force directed graph for the molecule
+* Configurable style parameters for canvas, atoms, bonds
+
+# Features WIP
+* Molecule Reaction components
+* Loading examples directly from standard notations like SMILE
+* 3-D support
 
 Check out an example here. [Demo](https://arpitnarechania.github.io/d3-molecule/)
-
-Screenshot:
-![Screenshot](https://raw.githubusercontent.com/arpitnarechania/d3-molecule/master/assets/screenshot.png)
 
 # Installation
 
@@ -25,8 +41,6 @@ To use this library then, simply include d3.js, jquery, Molecule.js and Molecule
 <script src="/path/to/jquery.min.js"></script>
 <script src="/path/to/d3.min.js"></script>
 <script src="/path/to/dist/css/Molecule.css"></script>
-<script src="/path/to/dist/js/Elements.js"></script>
-<script src="/path/to/dist/js/Examples.js"></script>
 <script src="/path/to/dist/js/Molecule.js"></script>
 ```
 
@@ -39,19 +53,51 @@ To use this library, you must create a container element and instantiate a new M
 ```
 
 
+Data
+```
+var data = {
+    "nodes": [
+      {
+        "id": 0,
+        "atom": "Mg",
+        "charge":""
+      },
+      {
+        "id": 1,
+        "atom": "Cl",
+        "charge":""
+      },
+      {
+        "id": 2,
+        "atom": "Cl",
+        "charge":""
+      }
+    ],
+    "links": [
+      {
+        "source": 0,
+        "target": 1,
+        "bond": 1
+      },
+      {
+        "source": 0,
+        "target": 2,
+        "bond": 1
+      }
+    ]
+  }
+```
+
 Setting chart parameters
 ``` javascript
 
-var key = "Benzene";
-var basis = "Atomic Weight";
-
-var options = {
+    var options = {
         domElement: "#container",
         uniqueId: 1,
-        width: 500,
+        width: 500, 
         height: 500,
         borderThickness: 1,
-        borderColor: "#000000",
+        borderColor: "#ffffff",
         background: "#ffffff",
         charge: -1000,
         friction: 0.9,
@@ -66,30 +112,16 @@ var options = {
         atomBorderThickness: 2,
         atomBorderColor: "#000000",
         atomTextColor: "#000000",
-        atomSizeBasis: basis,
+        atomSizeBasis: "Atomic Radius",
         boundingBox: true,
         borderRadiusX: 5,
         borderRadiusY: 5,
         detailedTooltips: true
     };
 
-    var Elements = {};
-
-    function loadPeriodicTableElements() {
-        for (var i = 0; i < periodicTableData.length; i++) {
-            // Preparing a Javascript Object of all Elements
-            Elements[periodicTableData[i]["Symbol"]] = periodicTableData[i];
-        }
-    }
-    loadPeriodicTableElements();
-
-    for (var i = 0; i < Examples[key].nodes.length; i++) {
-        Examples[key].nodes[i]["size"] = Elements[Examples[key].nodes[i]["atom"]][basis];
-    }
-
-    var molecule = new Molecule(Examples[key],options);
+    var molecule = new Molecule(data,options);
     molecule.render();
-    
+
 ```
 
 ## Options
@@ -116,24 +148,24 @@ var options = {
 | `atomBorderThickness`         | Atom border thickness                                                     | string   | `1`                        |
 | `atomBorderColor`             | Atom border color                                                         | string   | `'#000000'`                |
 | `atomTextColor`               | Atom text color                                                           | string   | `'#000000'`                |
-| `atomSizeBasis`               | Basis on which the atom circle svgs be rendered                           | string   | `'Atomic Radius'`          |
+| `atomSizeBasis`               | Basis on which the atom circle svgs be rendered                           | string   | `'Atomic Radius'` | '`Atomic Weight '` |
 | `boundingBox`                 | If the molecule should be constrained inside the svg container            | boolean  | `true`                     |
 | `borderRadiusX`               | SVG container's border (X) parameter                                      | number   | `5`                        |
 | `borderRadiusY`               | SVG container's border (Y) parameter                                      | number   | `5`                        |
 | `detailedTooltips`            | If detailed info about the element to be shown on hover or not            | boolean  | `true`                     |
 
-# Advanced Usage and Features
-* Clicking the atom selects it for deleting,fixing,etc (Check the example)
-* Clicking the svg view port selects it for deleting,refreshing, recycling etc (Check the example)
-* Clicking on 2 atoms, joins them by a bond
-* Clicking on a bond, toggles the bond type
-* Double clicking a bond, removes it
-* Double clicking an atom, removes it and its bonds
-* Lock/ Unlock atoms to their position if needed.
-* Hide/ Show atoms if needed.
-* Drag and Resizing of molecule container using the jquery-ui library.
-* Option to Export molecule as a PNG image
-* Some examples exist in the Examples.js file
+## Bond Types include :- 
+
+* Single
+* Double
+* Triple
+* Quadruple
+* Wedged
+* Wavy
+* Dotted
+* Dashed (Stripes)
+* Dashed (Gradient)
+* Arc
 
 # Test (WIP)
 * Unit test cases in the testrunner.html
