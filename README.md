@@ -55,22 +55,25 @@ To use this library, you must create a container element and instantiate a new M
 
 Data
 ```
-var data = {
+    var data = {
     "nodes": [
       {
         "id": 0,
         "atom": "Mg",
-        "charge":""
+        "charge":"",
+        "size":24
       },
       {
         "id": 1,
         "atom": "Cl",
-        "charge":""
+        "charge":"",
+        "size":35
       },
       {
         "id": 2,
         "atom": "Cl",
-        "charge":""
+        "charge":"",
+        "size":35
       }
     ],
     "links": [
@@ -124,6 +127,10 @@ Setting chart parameters
 
 ```
 
+Alternatively, 
+* Run a webserver to serve the index.html in the project root
+* It should start the interactive tool.
+
 ## Options
 
 | Option                        | Description                                                               | Type     | Example
@@ -166,6 +173,7 @@ Setting chart parameters
 * Dashed (Stripes)
 * Dashed (Gradient)
 * Arc
+
 
 # Test (WIP)
 * Unit test cases in the testrunner.html
