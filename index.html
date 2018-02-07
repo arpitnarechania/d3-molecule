@@ -24,14 +24,16 @@
                 <a href="#" class="navbar-left"><img src="assets/logo-md.png" class="img img-responsive" width="50"></a><span style="font-size:32px;">d3-molecule</span>
             </div>
             <div id="content">
-                <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-                    <li class="active"><a href="#moleculeConfig" data-toggle="tab">Molecule</a></li>
-                    <li><a href="#atomConfig" data-toggle="tab">Atom</a></li>
-                    <li><a href="#bondConfig" data-toggle="tab">Bond</a></li>
-                    <li><a href="#canvasConfig" data-toggle="tab">Canvas</a></li>
-                    <li><a href="#molecularForceConfig" data-toggle="tab">Molecular Forces</a></li>
-                </ul>
-                <div id="my-tab-content" class="tab-content">
+                <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">               
+                    <li class="nav-tabs active"><a href="#moleculeConfig" data-toggle="tab">Molecule</a></li>
+                    <li class = "nav-tabs"><a href="#atomConfig" data-toggle="tab">Atom</a></li>
+                    <li class = "nav-tabs"><a href="#bondConfig" data-toggle="tab">Bond</a></li>
+                    <li class = "nav-tabs"><a href="#canvasConfig" data-toggle="tab">Canvas</a></li>
+                    <li class = "nav-tabs"><a href="#molecularForceConfig" data-toggle="tab">Molecular Forces</a></li> 
+                    <li class = "nav-tabs"><a href="#organicCompounds" data-toggle="tab">Organic Compounds</a></li>
+                    <li class = "nav-tabs"><a  href="#readMe" data-toggle="tab">Read Me</a></li>                   
+                </ul>      
+                <div id="my-tab-content" class="tab-content">                  
                     <div class="tab-pane active" id="moleculeConfig">
                         <br>
                         <form class="form-inline">
@@ -47,7 +49,7 @@
                                     <input style="width:75px" id="filename" type="text" class="form-control" placeholder="text">
                                 </div>
                             </div>
-                        </form>
+                        </form>                     
                     </div>
                     <div class="tab-pane" id="atomConfig">
                         <div class="panel-body">
@@ -240,21 +242,68 @@
                                 </div>
                             </form>
                         </div>
-                    </div>
+                    </div>             
+                    <div class="tab-pane" id="organicCompounds">
+                        <div class="panel-body">
+							<form class="form-inline" id = "myForm">
+								<div class="form-group">
+								    <p> Search the molecule with IUPAC name </p>
+								    <input style="width:800px" type = "text" class = "form-control" id = "moleculeName" placeholder = "search IUPAC names...(e.g. methane, ethene etc)">							    
+								    <input type= "button" class = "btn b" id = "create" onclick="organicCompounds()" value = "submit">			
+	                                <input type= "button" class= "btn btn-lg btn-default fa" id='refresh' onclick="refreshOrganicMolecule()" title="refresh molecule" value="&#xf021;">
+	                                <input type= "button" class= "btn btn-lg btn-default fa" id='organicDelete' onclick= "deleteOrganicMolecule()" title="delete molecule" value="&#xf1f8;">
+	                                <input type= "button" class= "btn btn-lg btn-default fa" id='organicSave' onclick="exportOrganicAsPNG()" title="export molecule as png" value="&#xf019;">			        						
+								    <div class= "input-group">
+	                                    <span class="input-group-addon">Filename</span>
+	                                    <input style="width:75px" id="filenameOragnic" type="text" class="form-control" placeholder="text">
+	                                </div>	
+	                             </div>		
+                             </form> 		
+                             <br>
+                             <div>
+                             	<span id = 'names' ></span>
+							    <span id = 'types'></span>
+							    <span id = 'output'></span>	 	
+                             </div>		
+                             <br>				                            
+                        </div> 
+                        <div style = "width:100%; height:1500px" align="center" class="row" id="containerNew"></div>                           
+                    </div>                       
+                    <div class="tab-pane" id = "readMe"> 
+                       <object width= "100%" height="7000" type="text/html" data="README.html"></object>                  
+                    </div>                                              
                 </div>
-            </div>
+            </div>        
         </div>
         <br>
-        <div class="row" id="container"></div>
+        <div class="row" id="container"></div> 
     </div>
+    
     <script type="text/javascript" src="dist/js/Elements.js"></script>
     <script type="text/javascript" src="dist/js/Examples.js"></script>
     <script type="text/javascript" src="dist/js/Molecule.js"></script>
     <script type="text/javascript" src="dist/js/Main.js"></script>
+    <script type="text/javascript" src="dist/js/IUPACname.js"></script>
 </body>
 <script>
+$(".nav-tabs").on( "click", function() {
+	$(document).ready(function() {
+	bindClick();
+	})
+});
+
 fillDropdownWithExamples();
 loadPeriodicTableElements();
 
 $('#tabs').tab();
+$("form").submit(function (e) {
+    e.preventDefault();
+});
+
+$("#moleculeName").keyup(function(event) {
+    if (event.keyCode === 13) {
+        $("#create").click();    
+    }
+});
 </script>
+
