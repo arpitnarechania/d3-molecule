@@ -4,35 +4,36 @@
 <head>
     <title>d3-molecule</title>
     <link rel="shortcut icon" type="image/png" href="assets/favicon.png" />
-    <script src="lib/jquery.min.js"></script>
-    <link href="lib/jquery-ui.min.css" rel="stylesheet">
-    <link href="lib/bootstrap.min.css" rel="stylesheet">
-    <link href="lib/bootstrap-theme.min.css" rel="stylesheet">
-    <script src="lib/jquery-ui.min.js"></script>
-    <script src="lib/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css">
-    <script src="lib/canvas-to-blob.min.js"></script>
-    <script src="lib/FileSaver.min.js"></script>
-    <script src="lib/d3.min.js"></script>
-    <link href="https://rawgit.com/arpitnarechania/d3-molecule/master/dist/css/Molecule.css" rel="stylesheet">
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <link href="node_modules/jquery-ui-dist/jquery-ui.min.css" rel="stylesheet">
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <script src="node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+    <script src="node_modules/blueimp-canvas-to-blob/js/canvas-to-blob.min.js"></script>
+    <script src="node_modules/file-saver/FileSaver.min.js"></script>
+    <script src="node_modules/d3/d3.min.js"></script>
+    <link href="dist/css/Molecule.css" rel="stylesheet">
 </head>
 
 <body>
     <div class="container-fluid">
-        <a href="https://github.com/arpitnarechania/d3-molecule"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
         <div id="header">
             <div style="margin-top:16px;margin-bottom:16px;">
                 <a href="#" class="navbar-left"><img src="assets/logo-md.png" class="img img-responsive" width="50"></a><span style="font-size:32px;">d3-molecule</span>
             </div>
             <div id="content">
-                <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-                    <li class="active"><a href="#moleculeConfig" data-toggle="tab">Molecule</a></li>
-                    <li><a href="#atomConfig" data-toggle="tab">Atom</a></li>
-                    <li><a href="#bondConfig" data-toggle="tab">Bond</a></li>
-                    <li><a href="#canvasConfig" data-toggle="tab">Canvas</a></li>
-                    <li><a href="#molecularForceConfig" data-toggle="tab">Molecular Forces</a></li>
-                </ul>
-                <div id="my-tab-content" class="tab-content">
+                <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">               
+                    <li class="nav-tabs active"><a href="#moleculeConfig" data-toggle="tab">Molecule</a></li>
+                    <li class = "nav-tabs"><a href="#atomConfig" data-toggle="tab">Atom</a></li>
+                    <li class = "nav-tabs"><a href="#bondConfig" data-toggle="tab">Bond</a></li>
+                    <li class = "nav-tabs"><a href="#canvasConfig" data-toggle="tab">Canvas</a></li>
+                    <li class = "nav-tabs"><a href="#molecularForceConfig" data-toggle="tab">Molecular Forces</a></li> 
+                    <li class = "nav-tabs"><a href="#organicCompounds" data-toggle="tab">Organic Compounds</a></li>
+                    <li class = "nav-tabs"><a  href="#readMe" data-toggle="tab">Read Me</a></li>                   
+                </ul>      
+                <div id="my-tab-content" class="tab-content">                  
                     <div class="tab-pane active" id="moleculeConfig">
                         <br>
                         <form class="form-inline">
@@ -48,7 +49,7 @@
                                     <input style="width:75px" id="filename" type="text" class="form-control" placeholder="text">
                                 </div>
                             </div>
-                        </form>
+                        </form>                     
                     </div>
                     <div class="tab-pane" id="atomConfig">
                         <div class="panel-body">
@@ -241,49 +242,77 @@
                                 </div>
                             </form>
                         </div>
-                    </div>
+                    </div>             
+                    <div class="tab-pane" id="organicCompounds">
+                        <div class="panel-body">
+							<form class="form-inline" id = "myForm">
+								<div class="form-group">
+								    <p> Search the molecule with IUPAC name </p>
+								    <input style="width:800px" type = "text" class = "form-control" id = "moleculeName" placeholder = "search IUPAC names...(e.g. methane, ethene etc)">							    
+								    <input type= "button" class = "btn b" id = "create" onclick="organicCompounds()" value = "submit">			
+	                                <input type= "button" class= "btn btn-lg btn-default fa" id='refresh' onclick="refreshOrganicMolecule()" title="refresh molecule" value="&#xf021;">
+	                                <input type= "button" class= "btn btn-lg btn-default fa" id='organicDelete' onclick= "deleteOrganicMolecule()" title="delete molecule" value="&#xf1f8;">
+	                                <input type= "button" class= "btn btn-lg btn-default fa" id='organicSave' onclick="exportOrganicAsPNG()" title="export molecule as png" value="&#xf019;">			        						
+								    <div class= "input-group">
+	                                    <span class="input-group-addon">Filename</span>
+	                                    <input style="width:75px" id="filenameOragnic" type="text" class="form-control" placeholder="text">
+	                                </div>	
+	                             </div>		
+                             </form> 		
+                             <br>
+                             <div>
+                             	<span id = 'names' ></span>
+							    <span id = 'types'></span>
+							    <span id = 'output'></span>	 	
+                             </div>		
+                             <br>				                            
+                        </div> 
+                        <div style = "width:100%; height:1500px" align="center" class="row" id="containerNew"></div>                           
+                    </div>                       
+                    <div class="tab-pane" id = "readMe"> 
+                       <object width= "100%" height="7000" type="text/html" data="README.html"></object>                  
+                    </div>                                              
                 </div>
-            </div>
+            </div>        
         </div>
         <br>
-        <div class="row" id="container"></div>
-        <br>
-        <div class="row" id="guide">
-            <ul>
-                <li>Double click on an atom deletes it</li>
-                <li>Double click on a bond deletes it</li>
-                <li>Single click on a bond changes its type</li>
-                <li>Single click on an atom selects it for delete; fix/ unfix; show/ hide; bonding controls in the "Atom" tab</li>
-                <li>Single click on 2 atoms in succession connects them with a single bond</li>
-                <li>Single click on the molecule viewport selects it for delete/ refresh/ recycle/ save controls in the "Molecule" tab. It also fix/unfixes it.</li>
-                <li>You can also manually perform atom/bond CRUD operations using the Node Id (can be fetched by hovering on the entities)</li>
-                <li>If the molecule is stuck after an operation, select the viewport and click on Refresh in the "Molecule" tab</li>
-            </ul>
-
-        </div>
+        <div class="row" id="container"></div> 
     </div>
-    <script type="text/javascript" src="https://rawgit.com/arpitnarechania/d3-molecule/master/dist/js/Elements.js"></script>
-    <script type="text/javascript" src="https://rawgit.com/arpitnarechania/d3-molecule/master/dist/js/Examples.js"></script>
-    <script type="text/javascript" src="https://rawgit.com/arpitnarechania/d3-molecule/master/dist/js/Molecule.js"></script>
-    <script type="text/javascript" src="src/Main.js"></script>
+    
+    <script type="text/javascript" src="dist/js/Elements.js"></script>
+    <script type="text/javascript" src="dist/js/Examples.js"></script>
+    <script type="text/javascript" src="dist/js/Molecule.js"></script>
+    <script type="text/javascript" src="dist/js/Main.js"></script>
+    <script type="text/javascript" src="dist/js/IUPACname.js"></script>
 </body>
 <script>
-
-$(document).ready(function(){
-
-    fillDropdownWithExamples();
-    loadPeriodicTableElements();
-
-    $('#tabs').tab();
-
-    $("#MoleculeId").val("2");
-    newMolecule();
-    $("#MoleculeId").val("3");
-    newMolecule();
-    $("#MoleculeId").val("4");
-    newMolecule();
-    $("#MoleculeId").val("5");
-    newMolecule();
-
+$(".nav-tabs").on( "click", function() {
+	$(document).ready(function() {
+	bindClick();
+	})
 });
+
+fillDropdownWithExamples();
+loadPeriodicTableElements();
+
+$('#tabs').tab();
+$("form").submit(function (e) {
+    e.preventDefault();
+});
+
+$("#moleculeName").keyup(function(event) {
+    if (event.keyCode === 13) {
+        $("#create").click();    
+    }
+});
+	
+$("#MoleculeId").val("2");
+newMolecule();
+$("#MoleculeId").val("3");
+newMolecule();
+$("#MoleculeId").val("4");
+newMolecule();
+$("#MoleculeId").val("5");
+newMolecule();
 </script>
+

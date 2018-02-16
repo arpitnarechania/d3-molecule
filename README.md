@@ -1,10 +1,10 @@
-# d3-molecule
+## Project Title: d3-molecule
 
 **d3-molecule** is an open-source library for learning Chemical Bonding in an interactive way.
 
-![Screenshot](https://raw.githubusercontent.com/arpitnarechania/d3-molecule/master/assets/screenshot.png)
-
-# Usage and Features
+## ![Screenshot](https://github.com/wangyingxie/wangyingxie.github.io/blob/master/screenshot2.png)
+				
+## Usage and Features
 * Clicking the atom selects it
 * Clicking on 2 atoms, joins them by a bond
 * Clicking on a bond, toggles the bond type
@@ -13,16 +13,65 @@
 * Double clicking an atom, removes it and its bonds
 * Lock/ Unlock atoms to their position if needed.
 * Hide/ Show atoms if needed.
-* Drag and Resizing of molecule container
+* Drag and Resizing of molemethaneculecule container
 * Option to Export molecule as a PNG image
 * Configurable forces, constants of force directed graph for the molecule
 * Configurable style parameters for canvas, atoms, bonds
+* Visualize organic chemical structures based on IUPAC conventions.
 
-# Author
+## Features WIP
+* Molecule Reaction components
+* Loading examples directly from standard notations like SMILE
+* 3-D support
 
-Arpit Narechania
-arpitnarechania@gmail.com
+---------------------------------------------------------------------------------------------------------------------------------------
+## New Feature of Organic Compounds (added on Jan-2018)
 
-# License
+* The new module IUPACname.js adds functionality of searching organic compounds using IUPAC names.  
+* This library allows you to add the side groups including methyl, ethyl and propyl on the main chain.
+* Note that the library doesn't cover all names for organic compounds.
 
-MIT
+## Types of organic compounds:  
+
+| Organic Compounds | 
+| ------------------|
+| `Alkanes`         |
+| `Alkenes`         |
+| `Alkynes`         |
+| `Alkyl halides`   |
+| `Alcohols`        |
+| `Ethers`          |
+| `Aldehydes`       |
+| `Ketones`         |
+| `Carboxylic Acids`|
+| `Esters`          |
+| `Amines`          |
+| `Amides`          |
+	
+
+## Limitations for IUPAC name search:
+* The maximum number of carbon is 12.
+* The double bond, triple bond, -OH, -C=O- are at the end of the main chain. 
+* The amide is always primary amide. 
+* More diverse functionality will be updated.
+
+## Examples for using organic compounds
+
+| Organic Compounds | Example                           |
+| ------------------|-----------------------------------|
+| `Alkanes`         |`methane`, `2-methyl-4-ethyloctane`|
+| `Alkenes`         |`ethene`, `2-methyl-4-ethyloctene` |
+| `Alkynes`         |`ethyne`, `2-methyl-4-ethyloctyne` |
+| `Alkyl halides`   |`3-fluoro-4-ethyloctyne`           |
+| `Alcohols`        |`ethanol`                          |
+| `Ethers`          |`ethyl methyl ether`               |
+| `Aldehydes`       |`3-methylbutanal`                  |
+| `Ketones`         |`propanone`                        |
+| `Carboxylic Acids`|`ethanoic acid`                    |
+| `Esters`          |`methyl propanoate`                |
+| `Amines`          |`ethyl methyl amine`               |
+| `Amides`          |`butamide`                         |
+
+## License
+
+MIT (https://opensource.org/licenses/MIT.)
