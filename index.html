@@ -306,13 +306,15 @@ $("#moleculeName").keyup(function(event) {
     }
 });
 	
-$("#MoleculeId").val("2");
-newMolecule();
-$("#MoleculeId").val("3");
-newMolecule();
-$("#MoleculeId").val("4");
-newMolecule();
-$("#MoleculeId").val("5");
-newMolecule();
+$(document).ready(function() {
+    $("#MoleculeId").val("2");
+    newMolecule();
+    $("#MoleculeId").val("3");
+    newMolecule();
+    $("#MoleculeId").val("4");
+    newMolecule();
+    $("#MoleculeId").val("5");
+    newMolecule();
+	})
 </script>
 
