@@ -72,10 +72,6 @@
 | `Amines`          |`ethyl methyl amine`               |
 | `Amides`          |`butamide`                         |
 
-## Author for Organic Compounds
-* Ying Wang <wying102@vt.edu>
-* Shivaram Sitaram <shivramp@hotmail.com>
-
 ## License
 
 MIT (https://opensource.org/licenses/MIT.)
