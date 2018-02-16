@@ -85,13 +85,11 @@ function Molecule(graph, options) {
 
     var colorScale = d3.scale.ordinal().range(this.colorScheme); // The colorScale to use to color same atoms alike but different atoms in different colors.
     var radiusScale = d3.scale.sqrt().range([0, this.maxAtomRadius]); // The radiusScale
-
     var emptyContainerContents = function() {
         $(parent.domElement).empty(); // Clear the DOM and redraw the svg molecule every time.
     }
 
     var drawContainerContents = function() {
-
         parent.svg = d3.select(parent.domElement).append("svg")
             .attr("viewBox", "0 0 " + parent.width + " " + parent.height)
             .attr("preserveAspectRatio", "xMinYMid")
@@ -100,23 +98,20 @@ function Molecule(graph, options) {
             .attr("height", parent.height)
             .style("background-color", parent.background);
 
-
-
         // This aspect of code takes care of the Responsive nature of the div.
         var aspect = parent.width / parent.height;
         $(window).on("resize", function() {
             var targetWidth = $(parent.domElement).width();
-
             // Otherwise the default settings of width and height will be compromised.        
-            if (targetWidth > parent.width) {
+            if (targetWidth > parent.width || targetWidth == "-2" || targetWidth == "0" || parent.uniqueId == 1) {
                 return;
-            }
-
+            }  
             d3.select(".svg" + parent.uniqueId)
                 .attr("width", targetWidth)
                 .attr("height", Math.round(targetWidth / aspect));
         }).trigger("resize");
 
+        
         var borderPath = parent.svg.append("rect")
             .attr("class","svgBorder")
             .attr("x", 0)
@@ -128,7 +123,6 @@ function Molecule(graph, options) {
             .style("stroke", parent.borderColor)
             .style("fill", "none")
             .style("stroke-width", parent.borderThickness + "px");
-
     }
 
     var drawAtoms = function() {
