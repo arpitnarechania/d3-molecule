@@ -286,26 +286,25 @@
     <script type="text/javascript" src="dist/js/IUPACname.js"></script>
 </body>
 <script>
-$(document).ready(function() {
+	
+$(document).ready(function(){
 	$(".nav-tabs").on( "click", function() {
-		$(document).ready(function() {
-		bindClick();
-		})
+	$(document).ready(function() {
+	bindClick();
+	})
 	});
-
-	fillDropdownWithExamples();
-	loadPeriodicTableElements();
-
-	$('#tabs').tab();
+    fillDropdownWithExamples();
+    loadPeriodicTableElements();
+    $('#tabs').tab();
 	$("form").submit(function (e) {
-		e.preventDefault();
+	e.preventDefault();
 	});
 
-	$("#moleculeName").keyup(function(event) {
-		if (event.keyCode === 13) {
-			$("#create").click();    
-		}
-	});
+    $("#moleculeName").keyup(function(event) {
+	if (event.keyCode === 13) {
+	$("#create").click();    
+	}
+    });
     $("#MoleculeId").val("2");
     newMolecule();
     $("#MoleculeId").val("3");
@@ -314,6 +313,9 @@ $(document).ready(function() {
     newMolecule();
     $("#MoleculeId").val("5");
     newMolecule();
-	})
+});	
+	
+	
+	
 </script>
 
