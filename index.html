@@ -288,23 +288,7 @@
 <script>
 	
 $(document).ready(function(){
-	$(".nav-tabs").on( "click", function() {
-	$(document).ready(function() {
-	bindClick();
-	})
-	});
-    fillDropdownWithExamples();
-    loadPeriodicTableElements();
-    $('#tabs').tab();
-	$("form").submit(function (e) {
-	e.preventDefault();
-	});
 
-    $("#moleculeName").keyup(function(event) {
-	if (event.keyCode === 13) {
-	$("#create").click();    
-	}
-    });
     $("#MoleculeId").val("2");
     newMolecule();
     $("#MoleculeId").val("3");
@@ -315,7 +299,23 @@ $(document).ready(function(){
     newMolecule();
 });	
 	
-	
+$(".nav-tabs").on( "click", function() {
+    $(document).ready(function() {
+	bindClick();
+	})
+	});
+fillDropdownWithExamples();
+loadPeriodicTableElements();
+$('#tabs').tab();
+    $("form").submit(function (e) {
+	e.preventDefault();
+	});
+
+    $("#moleculeName").keyup(function(event) {
+	if (event.keyCode === 13) {
+	$("#create").click();    
+	}
+    });	
 	
 </script>
 
