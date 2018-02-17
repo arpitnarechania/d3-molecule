@@ -277,45 +277,55 @@
         </div>
         <br>
         <div class="row" id="container"></div> 
+	<div class="row" id="guide">
+            <ul>
+                <li>Double click on an atom deletes it</li>
+                <li>Double click on a bond deletes it</li>
+                <li>Single click on a bond changes its type</li>
+                <li>Single click on an atom selects it for delete; fix/ unfix; show/ hide; bonding controls in the "Atom" tab</li>
+                <li>Single click on 2 atoms in succession connects them with a single bond</li>
+                <li>Single click on the molecule viewport selects it for delete/ refresh/ recycle/ save controls in the "Molecule" tab. It also fix/unfixes it.</li>
+                <li>You can also manually perform atom/bond CRUD operations using the Node Id (can be fetched by hovering on the entities)</li>
+                <li>If the molecule is stuck after an operation, select the viewport and click on Refresh in the "Molecule" tab</li>
+            </ul>
+        </div>
     </div>
     
-    <script type="text/javascript" src="dist/js/Elements.js"></script>
-    <script type="text/javascript" src="dist/js/Examples.js"></script>
-    <script type="text/javascript" src="dist/js/Molecule.js"></script>
-    <script type="text/javascript" src="dist/js/Main.js"></script>
-    <script type="text/javascript" src="dist/js/IUPACname.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/arpitnarechania/d3-molecule/master/dist/js/Elements.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/arpitnarechania/d3-molecule/master/dist/js/Examples.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/arpitnarechania/d3-molecule/master/dist/js/Molecule.js"></script>
+    <script type="text/javascript" src="src/Main.js"></script>
+    <script type="text/javascript" src=""https://rawgit.com/arpitnarechania/d3-molecule/master/dist/js/IUPACname.js"></script>
 </body>
 <script>
 
-
-$(document).ready(function() {
-	$(".nav-tabs").on( "click", function() {
-		$(document).ready(function() {
-		bindClick();
-		})
-	});
-
-	fillDropdownWithExamples();
-	loadPeriodicTableElements();
-
-	$('#tabs').tab();
-	$("form").submit(function (e) {
-		e.preventDefault();
-	});
-
-	$("#moleculeName").keyup(function(event) {
-		if (event.keyCode === 13) {
-			$("#create").click();    
-		}
-	});
-    $("#MoleculeId").val("2");
-    newMolecule();
-    $("#MoleculeId").val("3");
-    newMolecule();
-    $("#MoleculeId").val("4");
-    newMolecule();
-    $("#MoleculeId").val("5");
-    newMolecule();
+$(".nav-tabs").on( "click", function() {
+	$(document).ready(function() {
+	bindClick();
 	})
+});
+
+fillDropdownWithExamples();
+loadPeriodicTableElements();
+
+$('#tabs').tab();
+$("form").submit(function (e) {
+	e.preventDefault();
+});
+
+$("#moleculeName").keyup(function(event) {
+	if (event.keyCode === 13) {
+		$("#create").click();    
+	}
+});
+$("#MoleculeId").val("2");
+newMolecule();
+$("#MoleculeId").val("3");
+newMolecule();
+$("#MoleculeId").val("4");
+newMolecule();
+$("#MoleculeId").val("5");
+newMolecule();
+	
 </script>
 
