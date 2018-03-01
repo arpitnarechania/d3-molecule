@@ -244,31 +244,31 @@
                             </form>
                         </div>
                     </div>
-					<div class="tab-pane" id="organicCompounds">
+		    <div class="tab-pane" id="organicCompounds">
                         <div class="panel-body">
-							<form class="form-inline" id = "myForm">
-								<div class="form-group">
-								    <p> Search the molecule with IUPAC name </p>
-								    <input style="width:800px" type = "text" class = "form-control" id = "moleculeName" placeholder = "search IUPAC names...(e.g. methane, ethene etc)">							    
-								    <input type= "button" class = "btn b" id = "create" onclick="organicCompounds()" value = "submit">			
+			    <form class="form-inline" id = "myForm">
+				<div class="form-group">
+				    <p> Search the molecule with IUPAC name </p>
+				        <input style="width:800px" type = "text" class = "form-control" id = "moleculeName" placeholder = "search IUPAC names...(e.g. methane, ethene etc)">							    
+				        <input type= "button" class = "btn b" id = "create" onclick="organicCompounds()" value = "submit">			
 	                                <input type= "button" class= "btn btn-lg btn-default fa" id='refresh' onclick="refreshOrganicMolecule()" title="refresh molecule" value="&#xf021;">
 	                                <input type= "button" class= "btn btn-lg btn-default fa" id='organicDelete' onclick= "deleteOrganicMolecule()" title="delete molecule" value="&#xf1f8;">
 	                                <input type= "button" class= "btn btn-lg btn-default fa" id='organicSave' onclick="exportOrganicAsPNG()" title="export molecule as png" value="&#xf019;">			        						
-								    <div class= "input-group">
+					<div class= "input-group">
 	                                    <span class="input-group-addon">Filename</span>
 	                                    <input style="width:75px" id="filenameOragnic" type="text" class="form-control" placeholder="text">
 	                                </div>	
-	                             </div>		
+	                          </div>		
                              </form> 		
                              <br>
                              <div>
                              	<span id = 'names' ></span>
-							    <span id = 'types'></span>
-							    <span id = 'output'></span>	 	
+				<span id = 'types'></span>
+				<span id = 'output'></span>	 	
                              </div>		
                              <br>				                            
                         </div> 
-                        <div style = "width:100%; height:1500px" align="center" class="row" id="containerNew"></div>                           
+                        <div style = "width:100%; height:800px" align="center" class="row" id="containerNew"></div>                           
                     </div>                       
                     <div class="tab-pane" id = "readMe"> 
                        <object width= "100%" height="7000" type="text/html" data="README.html"></object>                  
